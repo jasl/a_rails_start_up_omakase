@@ -1,0 +1,18 @@
+<% set_title 'Admin' %>
+<% content_for :top_nav do %>
+  <%= render 'admin/shared/top_nav' %>
+<% end %>
+
+<%= yield %>
+
+<% content_for :javascripts do %>
+  <%= javascript_include_tag "admin/application" %>
+  <%= yield :js %>
+<% end %>
+
+<% content_for :stylesheets do %>
+  <%= stylesheet_link_tag "admin/application", :media => "all" %>
+  <%= yield :css %>
+<% end %>
+
+<%= parent_layout '_bootstrap' %>

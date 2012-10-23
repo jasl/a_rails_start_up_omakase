@@ -1,0 +1,98 @@
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span8">
+      <%= form_for(current_user, :url => user_update_profile_path, :html => {:method => :put, :class => 'form-horizontal'}) do |f| %>
+        <fieldset>
+          <legend><%= t('devise.views.registrations.edit.title') %></legend>
+          <div class="row row-grid">
+            <div class="span6 offset1">
+              <%= print_error_messages current_user %>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <%= f.label :nickname, :class => 'control-label' %>
+            <div class="controls">
+              <%= f.text_field :nickname, :class => 'input-large' %>
+            </div>
+          </div>
+          <div class="control-group">
+            <%= f.label :location, :class => 'control-label' %>
+            <div class="controls">
+              <%= f.select :location_id, Location.all.map{|l| [l.full, l.id]}, :class => 'input-large' %>
+            </div>
+          </div>
+          <div class="control-group">
+            <%= f.label :gender, :class => 'control-label' %>
+            <div class="controls">
+              <label class="radio inline">
+                <%= f.radio_button :gender, true, :class => 'input-large' %>Male
+              </label>
+              <label class="radio inline">
+                <%= f.radio_button :gender, false, :class => 'input-large' %>Female
+              </label>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <%= f.submit t('devise.views.registrations.edit.submit'), :class => 'btn btn-primary' %>
+          </div>
+        </fieldset>
+      <% end %>
+
+      <hr/>
+
+      <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:method => :put, :class => 'form-horizontal'}) do |f| %>
+        <fieldset>
+          <legend><%= t('devise.views.registrations.edit.password') %></legend>
+          <div class="row row-grid">
+            <div class="span6 offset1">
+              <%= print_error_messages resource %>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <%= f.label :email, :class => 'control-label' %>
+            <div class="controls">
+              <%= f.email_field :email, :class => 'input-large', :disabled => 'disabled' %>
+            </div>
+          </div>
+          <div class="control-group">
+            <%= f.label :password, :class => 'control-label' %>
+            <div class="controls">
+              <%= f.password_field :password, :class => 'input-large' %>
+              <p class="help-block"><%= t('devise.views.registrations.edit.change_pass_tip') %></p>
+            </div>
+          </div>
+          <div class="control-group">
+            <%= f.label :password_confirmation, :class => 'control-label' %>
+            <div class="controls">
+              <%= f.password_field :password_confirmation, :class => 'input-large' %>
+            </div>
+          </div>
+          <div class="control-group">
+            <%= f.label :current_password, :class => 'control-label' %>
+            <div class="controls">
+              <%= f.password_field :current_password, :class => 'input-large' %>
+            </div>
+          </div>
+          <div class="form-actions">
+            <%= f.submit t('devise.views.registrations.edit.submit'), :class => 'btn btn-primary' %>
+          </div>
+        </fieldset>
+      <% end %>
+    </div>
+
+    <div class="span4">
+      <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+          <li class="nav-header">
+            <%= t('devise.views.commons.sidebar.title') %>
+          </li>
+          <%= render :partial => "devise/shared/links" %>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>

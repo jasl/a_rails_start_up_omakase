@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @post.title %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @post.user.email %>
+</p>
+
+<p>
+  <b>Body:</b>
+  <%= safe @post.body %>
+</p>
+
+<%= link_to 'Edit', edit_post_path(@post) %> |
+<%= link_to 'Back', posts_path %>
+
+<div>
+  <%= render 'comments/form' %>
+</div>
+
+<div>
+  <%# @post.comments.build will append the record set, so if render form first should use @post.comments[0..-2] %>
+  <%= render @post.comments[0..-2] %>
+</div>
+

@@ -1,0 +1,53 @@
+defaults: &defaults
+  domain: ""
+  site_name: "Start Up"
+  keywords: ["start up", "Start Up"]
+  description: "Start Up site"
+  version: "0.1"
+  upload:
+    attachment: ["doc", "docx", "pdf"]
+    picture: ["jpg", "tif", "png", "gif"]
+  deployment:
+    app_name: "start_up"
+    path: "/var/www/apps"
+    bundle_wrapper_cmd: "/usr/local/rvm/bin/startup_bundle"
+    # rvm_ruby: "ruby-1.9.3-p194"
+    server: ""
+    repository: ""
+    branch: "master"
+    worker_user: ""
+    worker_group: ""
+    deploy_user: ""
+  mailer:
+    sender: ""
+  tokens:
+    google_analytics_key: ""
+    oauth:
+      weibo:
+        app_key: ""
+        token: ""
+      xiaonei:
+        app_key: ""
+        token: ""
+        scope: ["status_update"]
+        separator: " "
+  upyun:
+    separator: "!"
+    username: ""
+    password: ""
+    images:
+      versions: ["100x100"]
+      bucket: ""
+      bucket_domain: ""
+    assets:
+      bucket: ""
+      bucket_domain: ""
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

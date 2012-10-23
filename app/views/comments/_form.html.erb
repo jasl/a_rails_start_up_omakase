@@ -1,0 +1,11 @@
+<%= form_for([@post, @post.comments.build]) do |f| %>
+  <div class="field">
+    <%= f.label :comment %><br />
+    <%= f.kindeditor :comment, :height => 100, :items => %w(fontname fontsize | emoticons image link) %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<% has_kindeditor %>

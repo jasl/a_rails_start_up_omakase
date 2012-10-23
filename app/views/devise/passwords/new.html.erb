@@ -1,0 +1,37 @@
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span8">
+      <%= form_for(resource, :as => resource_name, :url => password_path(resource_name),
+                   :html => { :method => :post, :class => 'form-horizontal' }) do |f| %>
+        <fieldset>
+          <legend><%= t('devise.views.passwords.new.title') %></legend>
+          <div class="row row-grid">
+            <div class="span6 offset1">
+              <%= print_error_messages resource %>
+            </div>
+          </div>
+          <div class="control-group">
+            <%= f.label :email, :class => 'control-label' %>
+            <div class="controls">
+              <%= f.email_field :email, :class => 'input-large' %>
+            </div>
+          </div>
+          <div class="form-actions" >
+            <%= f.submit t('devise.views.passwords.new.submit'), :class => 'btn btn-primary' %>
+          </div>
+        </fieldset>
+      <% end %>
+    </div>
+
+    <div class="span4">
+      <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+          <li class="nav-header">
+            <%= t('devise.views.commons.sidebar.title') %>
+          </li>
+          <%= render :partial => "devise/shared/links" %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

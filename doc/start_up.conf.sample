@@ -1,0 +1,52 @@
+upstream start_up {
+    # server unix:/var/www/apps/start_up/current/tmp/sockets/unicorn.sock fail_timeout=0;
+    server 127.0.0.1:8080 fail_timeout=0;
+}
+
+server {
+    listen       80;
+    server_name  jasl.me www.jasl.me start_up.jasl.me;
+
+    charset utf-8;
+    access_log  /var/www/logs/start_up.access.log;
+    error_log /var/www/logs/start_up.error.log;
+
+    client_max_body_size 5m;
+    #client_body_temp_path /var/www/uploads/nginx_temp
+
+    root /var/www/apps/start_up/current/public;
+
+    location / {
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+
+        proxy_redirect off;
+
+        if (!-f $request_filename) {
+            proxy_pass http://start_up;
+            break;
+        }
+    }
+
+    location ~ ^/assets/ {
+         expires 1d;
+         add_header Cache-Control public;
+
+         # Some browsers still send conditional-GET requests if there's a
+         # Last-Modified header or an ETag header even if they haven't
+         # reached the expiry date sent in the Expires header.
+         add_header Last-Modified "";
+         add_header ETag "";
+     }
+
+    error_page  404              /404.html;
+    location = /404.html {
+      root /var/www/apps/start_up/current/public;
+    }
+
+    error_page    500 502 503 504 /500.html;
+    location = /500.html {
+      root /var/www/apps/start_up/current/public;
+    }
+}

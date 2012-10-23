@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="Description" content="<%= yield :description %><%= Setting.description unless content_for? :description %>" />
+  <meta name="Keywords" content="<%= yield :keywords %><%= Setting.keywords.join(",") unless content_for? :keywords %>" />
+  <%= csrf_meta_tags %>
+
+  <%= yield :head %>
+
+  <title>
+    <%= yield :title %>
+  </title>
+
+  <%= yield :stylesheets %>
+
+  <link href="/favicon.ico" rel="shortcut icon">
+</head>
+<body>
+<%= yield :body %>
+
+<%= yield :javascripts %>
+</body>
+</html>
