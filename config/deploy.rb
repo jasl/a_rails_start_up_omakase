@@ -40,6 +40,12 @@ end
 
 settings = YAML.load_file("config/application.yml").fetch('production')
 
+# load airbrake
+if settings["tokens"]["airbrake"] != ""
+  require './config/boot'
+  require 'airbrake/capistrano'
+end
+
 # Set remote server user
 set :user, settings["deployment"]["deploy_user"]
 set :use_sudo, false

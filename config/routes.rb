@@ -1,5 +1,7 @@
 StartUp::Application.routes.draw do
 
+  mount RailsAdmin::Engine => '/rails_admin', :as => 'rails_admin'
+
   resources :posts do
     resources :comments, :only => [:create, :destroy]
   end
@@ -12,7 +14,7 @@ StartUp::Application.routes.draw do
     mount Resque::Server.new => 'resque_panel', :as => 'resque_panel'
   end
 
-
+  match 'district/:id' => 'district#show'
   post 'kindeditor/upload', :to => 'kindeditor/assets#create'
 
   devise_for :user, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks", :registrations => "users/registrations"}

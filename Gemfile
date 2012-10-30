@@ -38,8 +38,9 @@ gem "social-share-button"
 # Pagination
 gem 'kaminari'
 
-# Base administrator's frontend
-# gem 'rails_admin'
+# Base administrator's panel
+gem 'rails_admin'
+gem 'rails_admin_tag_list'
 
 # Application server
 gem 'unicorn'

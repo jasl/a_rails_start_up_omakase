@@ -36,9 +36,9 @@ module Kindeditor
        window.kindeditor_fields.push({
            id: '##{dom_id}',
            config: {
-           #{js_options},
-           imageUploadJson: '/kindeditor/upload',
-           allowFileManager: false,}
+             #{js_options},
+             uploadJson: '/kindeditor/upload'
+           }
        });"
     end
 
@@ -46,9 +46,15 @@ module Kindeditor
       str = []
       options.delete(:uploadJson)
       options.delete(:fileManagerJson)
+
       options.reverse_merge!(:width => '100%')
       options.reverse_merge!(:height => 300)
-      options.reverse_merge!(:allowFileManager => true)
+
+      options.reverse_merge!(:allowFileManager => false)
+      options.reverse_merge!(:allowFlashUpload => false)
+      options.reverse_merge!(:allowFileUpload => false)
+      options.reverse_merge!(:allowMediaUpload => false)
+
       options.each do |key, value|
         item = case value
                  when String then

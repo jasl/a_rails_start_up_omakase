@@ -63,7 +63,7 @@ StartUp::Application.configure do
 
   # Use a different logger for distributed setups
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
-  config.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.log", 'weekly')
+  config.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.log")
 
   # Use a different cache store in production
   config.cache_store = [:dalli_store,"127.0.0.1", {:namespace => "start_up", :compress => true}]

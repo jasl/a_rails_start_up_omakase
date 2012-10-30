@@ -1,6 +1,5 @@
 # -*- encoding : utf-8 -*-
 class Authorization < ActiveRecord::Base
-  attr_accessible :provider, :uid, :access_token, :refresh_token, :url, :expires_at
   belongs_to :user
 
   validates :provider, :uid, :access_token, :expires_at, presence: true
@@ -10,6 +9,8 @@ class Authorization < ActiveRecord::Base
 
   after_find :mount_api_handler
 
+  attr_accessible :provider, :uid, :access_token, :refresh_token, :url, :expires_at
+  attr_accessible :provider, :uid, :access_token, :refresh_token, :url, :expires_at, :as => :admin
   private
 
   # obj factory

@@ -108,6 +108,7 @@ zh-CN:
       change_password: '修改密码'
       change_registration: '修改注册信息'
       admin: '管理网站'
+      rails_admin: 'Rails admin'
       back_to_homepage: '回到网站'
 
 

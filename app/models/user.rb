@@ -11,10 +11,12 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
   validates :email, :uniqueness => true
   has_many :authorizations, :dependent => :destroy
-  belongs_to :location, :readonly => true
 
   # profile
   attr_accessible :nickname, :name, :phone, :location_id, :gender
+  attr_accessible :province, :city, :district
+
+  attr_accessible :nickname, :name, :phone, :location_id, :gender, :province, :city, :district, :as => :admin
 
   after_create :send_welcome_mail
 
@@ -24,15 +26,16 @@ class User < ActiveRecord::Base
 
   default_scope { where :state == :active }
 
+  def location
+    District.try_nested_get :province => self.province,
+                            :city => self.city,
+                            :district => self.district,
+                            :prepend_parent => true
+  end
+
   private
 
   def send_welcome_mail
     UserMailer.welcome(self.id).deliver!
-  end
-
-  def required_email_or_username
-    if email.blank? and username.blank?
-      errors.add(:email, :blank)
-    end
   end
 end

@@ -16,4 +16,6 @@ class Comment < ActiveRecord::Base
   validates :comment, :presence => true
 
   attr_accessible :comment, :title
+
+  attr_accessible :comment, :title, :state, :as => :admin
 end

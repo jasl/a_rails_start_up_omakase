@@ -12,7 +12,9 @@
         <ul class="dropdown-menu">
           <% if current_user.admin? %>
             <li><%= link_to(t('devise.navigation.back_to_homepage'), root_path) %></li>
+            <li class="divider"></li>
             <li><%= link_to(t('devise.navigation.admin'), admin_root_path) %></li>
+            <li><%= link_to(t('devise.navigation.rails_admin'), rails_admin_path) %></li>
             <li class="divider"></li>
           <% end %>
           <li><%= link_to(t('devise.navigation.change_registration'), edit_user_registration_path) %></li>

@@ -95,6 +95,12 @@ module ApplicationHelper
       has_specified_javascript 'kindeditor'
       @has_kindeditor = true
     end
+  end
 
+  def has_district_selects
+    unless defined? @has_district_selects
+      has_specified_javascript "district_selects"
+      @has_district_selects = true
+    end
   end
 end

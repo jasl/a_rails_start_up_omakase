@@ -13,15 +13,16 @@ defaults: &defaults
     bundle_wrapper_cmd: "/usr/local/rvm/bin/startup_bundle"
     # rvm_ruby: "ruby-1.9.3-p194"
     server: ""
-    repository: ""
+    repository: "your code repository"
     branch: "master"
     worker_user: ""
     worker_group: ""
     deploy_user: ""
   mailer:
-    sender: ""
+    sender: "no-reply@start_up.jasl.me"
   tokens:
-    google_analytics_key: ""
+    google_analytics: ""
+    airbrake: ""
     oauth:
       weibo:
         app_key: ""

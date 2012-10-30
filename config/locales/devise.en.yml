@@ -109,4 +109,5 @@ en:
       change_password: 'Change password'
       change_registration: 'Change registration'
       admin: 'Manage website'
+      rails_admin: 'Rails admin'
       back_to_homepage: 'Back to homepage'

@@ -17,9 +17,10 @@
             </div>
           </div>
           <div class="control-group">
-            <%= f.label :location, :class => 'control-label' %>
+            <%= f.label :district, :class => 'control-label' %>
             <div class="controls">
-              <%= f.select :location_id, Location.all.map{|l| [l.full, l.id]}, :class => 'input-large' %>
+              <%= f.district_selects :class => 'input-large' %>
+              <% has_district_selects %>
             </div>
           </div>
           <div class="control-group">

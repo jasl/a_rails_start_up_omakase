@@ -23,7 +23,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
       self.resource.nickname ||= data[:info][:nickname]
       self.resource.name ||= data[:info][:name]
-      self.resource.location ||= ::Location.where(:province => data[:info][:province], :city => data[:info][:city]).first
       self.resource.authorizations.build provider: data[:provider],
                                          uid: data[:uid],
                                          access_token: data[:access_token],

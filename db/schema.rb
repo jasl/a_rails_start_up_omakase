@@ -11,11 +11,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121022134639) do
+ActiveRecord::Schema.define(:version => 20121030150006) do
 
   create_table "assets", :force => true do |t|
     t.string   "access_token",   :null => false
-    t.string   "original_name"
     t.string   "store_name",     :null => false
     t.string   "store_path"
     t.integer  "file_size"
@@ -62,16 +61,6 @@ ActiveRecord::Schema.define(:version => 20121022134639) do
   add_index "comments", ["commentable_type"], :name => "index_comments_on_commentable_type"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
-  create_table "locations", :force => true do |t|
-    t.string "province", :null => false
-    t.string "city",     :null => false
-    t.string "district"
-  end
-
-  add_index "locations", ["province", "city", "district"], :name => "index_locations_on_province_and_city_and_district", :unique => true
-  add_index "locations", ["province", "city"], :name => "index_locations_on_province_and_city"
-  add_index "locations", ["province"], :name => "index_locations_on_province"
-
   create_table "posts", :force => true do |t|
     t.string   "title"
     t.text     "body"
@@ -81,6 +70,19 @@ ActiveRecord::Schema.define(:version => 20121022134639) do
   end
 
   add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
+
+  create_table "rails_admin_histories", :force => true do |t|
+    t.text     "message"
+    t.string   "username"
+    t.integer  "item"
+    t.string   "table"
+    t.integer  "month",      :limit => 2
+    t.integer  "year",       :limit => 5
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+  end
+
+  add_index "rails_admin_histories", ["item", "table", "month", "year"], :name => "index_rails_admin_histories"
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
@@ -110,7 +112,10 @@ ActiveRecord::Schema.define(:version => 20121022134639) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.string   "role",                   :limit => 10, :default => "user",   :null => false
+    t.string   "province",               :limit => 6
+    t.string   "city",                   :limit => 6
+    t.string   "district",               :limit => 6
+    t.string   "role",                   :limit => 10, :default => "member", :null => false
     t.string   "state",                  :limit => 10, :default => "active", :null => false
     t.datetime "created_at",                                                 :null => false
     t.datetime "updated_at",                                                 :null => false
