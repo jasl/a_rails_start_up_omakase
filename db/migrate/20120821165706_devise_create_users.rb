@@ -37,8 +37,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :city, :limit => 6
       t.string :district, :limit => 6
 
-      t.string :role, :null => false, :limit => 10, :default => 'member'
-      t.string :state, :null => false, :limit => 10, :default => 'active'
+      t.string :role, :null => false, :limit => 11, :default => 'member'
+      t.string :state, :null => false, :limit => 11, :default => 'active'
 
       t.timestamps
     end

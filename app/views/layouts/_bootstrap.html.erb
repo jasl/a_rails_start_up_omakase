@@ -1,48 +1,63 @@
 <% set_title Setting.site_name, true %>
-
-<% content_for :head do %>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="Description" content="<%= yield :description %><%= Setting.description unless content_for? :description %>"/>
+  <meta name="Keywords" content="<%= yield :keywords %><%= Setting.keywords.join(",") unless content_for? :keywords %>"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%= csrf_meta_tags %>
   <%= yield :meta %>
-<% end %>
 
-<% content_for :body do %>
-  <div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-      <div class="container">
-        <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </a>
+  <title>
+    <%= yield :title %>
+  </title>
 
-        <a class="brand" href="<%= root_path %>"><%= Setting.site_name %></a>
-        <%= yield :top_nav %>
-      </div>
+  <%= yield :stylesheets %>
+
+  <link href="/favicon.ico" rel="shortcut icon">
+</head>
+
+<body>
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+
+      <a class="brand" href="<%= root_path %>"><%= Setting.site_name %></a>
+      <%= yield :top_nav %>
     </div>
   </div>
+</div>
 
-  <div class="container">
-    <%= render 'shared/notice', :span => 'span10 offset1' %>
-    <%= yield %>
-    <footer class="footer">
-      <hr/>
-      <div class="pull-left" style="margin: 0 10px 0 10px;">
-        <%= image_tag 'rails.png', :width => 30 %>
-      </div>
-      <div>
-        <p>
-          <%= Setting.site_name %> <%= Setting.version %> created by &copy; <a href="http://jasl.github.com">Jasl</a> 2012.<br/>
-          Based on Ruby on Rails 3.2. MIT licence.
-        </p>
-      </div>
-    </footer>
-  </div>
-<% end %>
+<div class="container">
+  <%= render 'shared/notice', :span => 'span10 offset1' %>
 
-<% content_for :javascripts do %>
-  <!--[if lt IE 9]>
-  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
-  <![endif]-->
-<% end %>
+  <%= yield %>
 
-<%= parent_layout '_base_view' %>
+  <footer class="footer">
+    <hr/>
+    <div class="pull-left" style="margin: 0 10px 0 10px;">
+      <%= image_tag 'rails.png', :width => 30 %>
+    </div>
+    <div>
+      <p>
+        <%= Setting.site_name %> <%= Setting.version %> created by &copy; <a href="http://jasl.github.com">Jasl</a>
+        2012.<br/>
+        Based on Ruby on Rails 3.2. MIT licence.
+      </p>
+    </div>
+  </footer>
+</div>
+
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+<![endif]-->
+<%= yield :javascripts %>
+
+</body>
+</html>

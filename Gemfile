@@ -13,8 +13,8 @@ gem 'devise-encryptable'
 gem 'omniauth'
 gem 'omniauth-weibo-oauth2'
 gem 'omniauth-xiaonei'
-gem 'omniauth-douban-oauth2'
-gem 'omniauth-tqq-oauth2'
+# gem 'omniauth-douban-oauth2'
+# gem 'omniauth-tqq-oauth2'
 gem 'weibo_2', :git => 'https://github.com/jonnyzheng/weibo_2.git' # weibo api
 gem 'renren', :git => 'https://github.com/jasl/renren.git' # renren api
 gem 'cancan' # access control
@@ -32,7 +32,6 @@ gem "rest-client" # for up yun
 
 # UI
 gem 'jquery-rails'
-gem "social-share-button"
 # gem 'cells'
 
 # Pagination
@@ -41,19 +40,6 @@ gem 'kaminari'
 # Base administrator's panel
 gem 'rails_admin'
 gem 'rails_admin_tag_list'
-
-# Application server
-gem 'unicorn'
-
-# Memcached
-gem 'dalli'
-
-# Deploy
-gem 'capistrano'
-gem 'rvm-capistrano'
-gem 'sushi'
-gem 'capistrano_colors'
-gem 'foreman' # very cool... but... fuk upstart cannot use on production
 
 # Task queue
 gem 'resque'
@@ -68,10 +54,16 @@ gem 'resque-scheduler'
 # Misc
 gem 'settingslogic'
 gem 'rails-i18n'
-gem 'turbo-sprockets-rails3'
+gem 'quiet_assets' # disabled assets log
 
 group :production do
   gem 'mysql2'
+
+  # Memcached
+  gem 'dalli'
+
+  # Application server
+  gem 'unicorn'
 
   # Server monitoring service. see http://www.newrelic.com about sign up and configuration
   # gem 'newrelic_rpm'
@@ -90,9 +82,11 @@ group :assets do
   gem 'bootstrap-sass'
   gem 'compass-rails'
   gem 'jquery-ui-rails'
+
+  gem 'turbo-sprockets-rails3'
 end
 
-group :development, :test do
+group :development do
   # Generate table definations
   gem 'annotate'
 
@@ -100,32 +94,29 @@ group :development, :test do
   gem "pry"
   gem 'pry-rails'
 
-  # Disabled assets log
-  gem 'quiet_assets'
-
-  # Using thin in devlopment
-  gem 'thin'
-
-  gem 'sqlite3'
+  # Deploy
+  gem 'capistrano'
+  gem 'rvm-capistrano'
+  gem 'sushi'
+  gem 'capistrano_colors'
+  gem 'foreman' # very cool... but... fuk upstart cannot use on production
 end
 
 group :development, :test do
   gem "letter_opener" # send mail to broswer, not really send
-
   gem "rspec-rails"
-  gem "capybara"
   gem "awesome_print"
-  gem "database_cleaner"
-  gem "launchy"
-  gem 'factory_girl'
+
+  gem 'sqlite3'
+  gem 'thin'
 end
 
 group :test do
-  gem 'cucumber-rails', :require => false
-  gem "turn", :require => false
-  gem "simplecov", :require => false
+  gem "capybara"
+  gem "database_cleaner"
+  gem "launchy"
+  gem 'factory_girl'
   gem "shoulda-matchers"
   gem 'email_spec'
   gem 'resque_spec'
-  gem "webmock"
 end

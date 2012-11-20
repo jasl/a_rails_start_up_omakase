@@ -1,16 +1,16 @@
 Yet another initial Rails app for start up
 ======
-这些代码整理改进自我八月到九月开发的喜感网<http://www.xigan.com>第一版的基础部分的代码，希望能对其他的创业者快速开发原型产品时有所帮助。也希望能够帮我review代码，共同进步吧。我会不定期把改进合并进这里。
+这些代码整理改进自我八月到九月开发的喜感网<http://www.xigan.com>第一版的基础部分的代码，希望能对其他的创 业者快速开发原型产品时有所帮助。也希望能够帮我review代码，共同进步吧。我会不定期把改进合并进这里。
 
 OAuth部分实现有些有些繁琐，对国内网站OAuth2的实现感到有些无语。
 
 ##组件
 - 完整的部署流程（release code to server+bundle+migrate database+assets precompile+sync assets to upyun+hot deployment）
 - 用户子系统
-- 微博 人人的Oauth接口（逻辑实现复杂了，考虑未来重构）+ 初步的API调用封装
+- 微博 人人的Oauth接口+ 初步的API调用封装
 - 配置集中化
 - 若干实用的Helper
-- 初步的管理员后台
+- 初步的管理员后台(独立的namespace放与业务有关配合Rails_admin)
 - Kindeditor集成+图片上传的服务器端
 
 ##方案
@@ -20,11 +20,12 @@ OAuth部分实现有些有些繁琐，对国内网站OAuth2的实现感到有些
 - 数据库：MySQL
 - 文件上传：Carrierwave + 又拍云
 - 缓存、KV存储：Memcache + Redis
-- 任务队列、延迟任务：Resque + Resque-scheduler
+- 任务队列、延迟任务：Resque + Rescue-Scheduler
 - 服务器和站点监控：New relic
 - 程序异常反馈：Airbrake
+- 程序后台：Rails_admin
 - 部署：Capistrano
-- 邮件发送：Postfix / Gmail
+- 邮件发送：Postfix / others
 - 反向代理：Nginx
 - Web容器：Unicorn
 

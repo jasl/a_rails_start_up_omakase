@@ -78,6 +78,12 @@ module ApplicationHelper
     end
   end
 
+  def meta_tag(name, content)
+    <<-HTML
+      <meta name="#{name}" content="#{content}">
+    HTML
+  end
+
   def has_specified_javascript(js = controller_path)
     content_for :js do
       javascript_include_tag js

@@ -1,11 +1,11 @@
 class CreateComments < ActiveRecord::Migration
   def self.up
     create_table :comments do |t|
-      t.string :title, :limit => 50, :default => "" 
+      t.string :title, :limit => 50, :default => ""
       t.text :comment, :null => false
       t.references :commentable, :polymorphic => true, :null => false
       t.references :user, :null => false
-      t.string :state, :null => false, :default => 'published'
+      t.string :state, :limit => 11, :null => false, :default => 'published'
 
       t.timestamps
     end

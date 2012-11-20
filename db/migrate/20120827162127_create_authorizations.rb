@@ -6,7 +6,7 @@ class CreateAuthorizations < ActiveRecord::Migration
       t.string :access_token, :limit => 255, :null => false
       t.integer :expires_at, :null => false
       t.string :refresh_token
-      t.references :user
+      t.references :user, :null => false
 
       t.timestamps
     end

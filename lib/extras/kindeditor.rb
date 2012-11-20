@@ -37,7 +37,8 @@ module Kindeditor
            id: '##{dom_id}',
            config: {
              #{js_options},
-             uploadJson: '/kindeditor/upload'
+             uploadJson: '/kindeditor/upload',
+             basePath: '/assets/kindeditor/'
            }
        });"
     end
@@ -50,10 +51,10 @@ module Kindeditor
       options.reverse_merge!(:width => '100%')
       options.reverse_merge!(:height => 300)
 
-      options.reverse_merge!(:allowFileManager => false)
-      options.reverse_merge!(:allowFlashUpload => false)
-      options.reverse_merge!(:allowFileUpload => false)
-      options.reverse_merge!(:allowMediaUpload => false)
+      options.reverse_merge! :allowFileManager => false,
+                             :allowFlashUpload => false,
+                             :allowFileUpload => false,
+                             :allowMediaUpload => false
 
       options.each do |key, value|
         item = case value

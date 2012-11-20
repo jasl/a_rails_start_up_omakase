@@ -1,4 +1,4 @@
-#= require kindeditor/kindeditor.js
+#= require kindeditor/kindeditor-all.js
 
 $.each(window.kindeditor_fields, (i, item)->
   KindEditor.ready((K)->

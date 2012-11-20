@@ -5,8 +5,7 @@ class User < ActiveRecord::Base
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable #, omniauth_providers: [:weibo]
-  include Devise::Async::Model
+         :omniauthable, :async #, omniauth_providers: [:weibo]
 
   attr_accessible :email, :password, :password_confirmation, :remember_me
   validates :email, :uniqueness => true

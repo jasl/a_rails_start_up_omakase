@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(:version => 20121030150006) do
     t.string   "access_token",                :null => false
     t.integer  "expires_at",                  :null => false
     t.string   "refresh_token"
-    t.integer  "user_id"
+    t.integer  "user_id",                     :null => false
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
   end
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(:version => 20121030150006) do
     t.integer  "commentable_id",                                          :null => false
     t.string   "commentable_type",                                        :null => false
     t.integer  "user_id",                                                 :null => false
-    t.string   "state",                          :default => "published", :null => false
+    t.string   "state",            :limit => 11, :default => "published", :null => false
     t.datetime "created_at",                                              :null => false
     t.datetime "updated_at",                                              :null => false
   end
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(:version => 20121030150006) do
   create_table "posts", :force => true do |t|
     t.string   "title"
     t.text     "body"
-    t.integer  "user_id"
+    t.integer  "user_id",    :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -115,8 +115,8 @@ ActiveRecord::Schema.define(:version => 20121030150006) do
     t.string   "province",               :limit => 6
     t.string   "city",                   :limit => 6
     t.string   "district",               :limit => 6
-    t.string   "role",                   :limit => 10, :default => "member", :null => false
-    t.string   "state",                  :limit => 10, :default => "active", :null => false
+    t.string   "role",                   :limit => 11, :default => "member", :null => false
+    t.string   "state",                  :limit => 11, :default => "active", :null => false
     t.datetime "created_at",                                                 :null => false
     t.datetime "updated_at",                                                 :null => false
     t.string   "nickname"

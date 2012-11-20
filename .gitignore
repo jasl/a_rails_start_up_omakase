@@ -30,3 +30,8 @@ bin/startup_server
 # Ignore assets
 /public/assets
 
+# Configurations
+/config/database.yml
+/config/application.yml
+/config/newrelic.yml
+
