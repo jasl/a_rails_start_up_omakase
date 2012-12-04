@@ -56,6 +56,13 @@ gem 'settingslogic'
 gem 'rails-i18n'
 gem 'quiet_assets' # disabled assets log
 
+# Server monitoring service. see http://www.newrelic.com about sign up and configuration
+# gem 'newrelic_rpm'
+# Exception reporting service, see more on http://www.airbrake.io
+# gem 'airbrake'
+# Google analytics
+# gem 'garelic'
+
 group :production do
   gem 'mysql2'
 
@@ -64,11 +71,6 @@ group :production do
 
   # Application server
   gem 'unicorn'
-
-  # Server monitoring service. see http://www.newrelic.com about sign up and configuration
-  # gem 'newrelic_rpm'
-  # Exception reporting service, see more on http://www.airbrake.io
-  # gem 'airbrake'
 end
 
 group :assets do

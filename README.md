@@ -1,8 +1,18 @@
 Yet another initial Rails app for start up
 ======
-这些代码整理改进自我八月到九月开发的喜感网<http://www.xigan.com>第一版的基础部分的代码，希望能对其他的创 业者快速开发原型产品时有所帮助。也希望能够帮我review代码，共同进步吧。我会不定期把改进合并进这里。
+这些代码整理改进自我八月到九月开发的喜感网<http://www.xigan.com>第一版的基础部分的代码，同时也是第二版的基础，希望这里面的代码能对他人快速开发产品原型有所帮助。也希望能够帮我review代码，共同进步。我会不定期把改进合并进这里。这个repo另一个目的是记录我对rails app架构的想法。
 
-OAuth部分实现有些有些繁琐，对国内网站OAuth2的实现感到有些无语。
+或许对于Startup的快速迭代来说，MongoDB才是正确的选择。
+
+##自己YY的一些practice
+- lib/extras kindeditor和district_select的tag helper
+- lib/oauth_handlers 或许可以抽取成gem，利用facade pattern把人人、微博的相同作用的api包装成统一接口，app/models/authorization.rb 利用delegate直接调用
+- config/environments/production.rb 自定义了一套assets预编译规则，对重型js lib（例如kindeditor）友善
+- config/environments/production.rb 如果在application.yml里配置assets的bucket，直接让upyun接管所有assets
+- config/deploy.rb 你可以只给你的部署账号sudo no password service的权限，释放init.d脚本利用try_su来解决，保证部署账号的权限足够的低并且能够进行一些高危操作
+- lib/generators/script_generator 利用rails generator生成init.d脚本，脚本山寨自gitlab，配合rake task实现释放到/etc/init.d 然后chkconfig on
+- 开发环境下使用foreman管理app的所有进程，配置在Procfile里，config/environments/development.rb里的```$stdout.sync = true```使得rails log立即输出到stdout
+- app/uploaders/image_uploader.rb 修改了huacnlee的实现，默认图片作为一个asset处理
 
 ##组件
 - 完整的部署流程（release code to server+bundle+migrate database+assets precompile+sync assets to upyun+hot deployment）

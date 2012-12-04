@@ -32,6 +32,10 @@ class User < ActiveRecord::Base
                             :prepend_parent => true
   end
 
+  def to_s
+    self.nickname || self.email.split('@')[0]
+  end
+
   private
 
   def send_welcome_mail
