@@ -92,6 +92,9 @@ group :development do
   # Generate table definations
   gem 'annotate'
 
+  # Log analyzer
+  gem 'request-log-analyzer'
+
   # Debugger
   gem "pry"
   gem 'pry-rails'

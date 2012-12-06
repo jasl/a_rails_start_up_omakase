@@ -271,6 +271,7 @@ GEM
       redis (~> 3.0.0)
     ref (1.0.2)
     remotipart (1.0.2)
+    request-log-analyzer (1.12.5)
     resque (1.23.0)
       multi_json (~> 1.0)
       redis-namespace (~> 1.0)
@@ -346,7 +347,7 @@ GEM
     treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
-    turbo-sprockets-rails3 (0.3.2)
+    turbo-sprockets-rails3 (0.3.3)
       railties (> 3.2.8, < 4.0.0)
       sprockets (>= 2.0.0)
     tzinfo (0.3.35)
@@ -408,6 +409,7 @@ DEPENDENCIES
   rails_admin
   rails_admin_tag_list
   renren!
+  request-log-analyzer
   resque
   resque-cleaner
   resque-scheduler

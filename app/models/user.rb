@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   end
 
   def to_s
-    self.nickname || self.email.split('@')[0]
+    @nickname ||= self.nickname.blank? ? self.email.split('@')[0] : self.nickname
   end
 
   private

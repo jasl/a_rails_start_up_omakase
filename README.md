@@ -38,6 +38,7 @@ Yet another initial Rails app for start up
 - 邮件发送：Postfix / others
 - 反向代理：Nginx
 - Web容器：Unicorn
+- 日志分析：request-log-analyzer
 
 ##Gems
 - 用户系统：devise + omniauth
