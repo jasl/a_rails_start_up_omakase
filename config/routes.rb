@@ -17,6 +17,10 @@ StartUp::Application.routes.draw do
   match 'district/:id' => 'district#show'
   post 'kindeditor/upload', :to => 'kindeditor/assets#create'
 
+  # User friendly exception handling
+  match "/404", :to => "errors#not_found"
+  match "/500", :to => "errors#error_occurred"
+
   devise_for :user, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks", :registrations => "users/registrations"}
   devise_scope :user do
     get 'user/binding', :to => 'users/registrations#binding'

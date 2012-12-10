@@ -108,4 +108,7 @@ StartUp::Application.configure do
   # # }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
+
+  # User friendly exception handling
+  config.exceptions_app = self.routes
 end

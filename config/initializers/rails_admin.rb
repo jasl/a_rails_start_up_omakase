@@ -1,6 +1,11 @@
 # RailsAdmin config file. Generated on October 30, 2012 23:00
 # See github.com/sferik/rails_admin for more informations
 
+# add assets precompile
+if Rails.env.production?
+  Rails.configuration.assets.precompile += %w"rails_admin/**.png fonts/**"
+end
+
 RailsAdmin.config do |config|
 
 
