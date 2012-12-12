@@ -53,6 +53,7 @@ gem 'resque-scheduler'
 
 # Misc
 gem 'settingslogic'
+gem 'sanitize' # HTML sanitize
 gem 'rails-i18n'
 gem 'quiet_assets' # disabled assets log
 
@@ -77,7 +78,9 @@ group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
 
-  gem 'therubyracer', :platforms => :ruby
+  # gem 'libv8' # fix therubyracer compiling issue
+  # there has a compiling issue in 0.11, so keep 0.10
+  gem 'therubyracer', '0.10.2', :platforms => :ruby
   gem 'uglifier', '>= 1.0.3'
 
   # UI
@@ -102,6 +105,8 @@ group :development do
   # Deploy
   gem 'capistrano'
   gem 'rvm-capistrano'
+  gem 'capistrano-resque'
+  gem 'capistrano-unicorn'
   gem 'sushi'
   gem 'capistrano_colors'
   gem 'foreman' # very cool... but... fuk upstart cannot use on production

@@ -24,7 +24,7 @@ module StartUp
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths += %W(#{config.root}/lib/oauth_handlers
                                 #{config.root}/lib/utils
-                                #{config.root}/lib/extras
+                                #{config.root}/lib/form_helpers
                                 #{config.root}/app/jobs)
     #
     #config.autoload_paths += get_nested_dir "#{config.root}/app/models"

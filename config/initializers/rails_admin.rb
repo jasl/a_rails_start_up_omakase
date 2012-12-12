@@ -3,7 +3,7 @@
 
 # add assets precompile
 if Rails.env.production?
-  Rails.configuration.assets.precompile += %w"rails_admin/**.png fonts/**"
+  Rails.configuration.assets.precompile += %w"rails_admin/**.png  *.woff *.ttf *.svgz *.svg"
 end
 
 RailsAdmin.config do |config|

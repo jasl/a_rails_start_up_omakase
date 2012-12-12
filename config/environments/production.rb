@@ -69,9 +69,7 @@ StartUp::Application.configure do
   config.cache_store = [:dalli_store,"127.0.0.1", {:namespace => "start_up", :compress => true}]
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
-  unless Setting.upyun.assets.bucket_domain.blank?
-    config.action_controller.asset_host = Setting.upyun.assets.bucket_domain
-  end
+  # config.action_controller.asset_host = Setting.upyun.assets.bucket_domain
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   #config.assets.precompile = [

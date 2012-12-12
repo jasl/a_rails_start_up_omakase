@@ -1,11 +1,11 @@
-settings = YAML.load_file("config/application.yml").fetch('production')
+rails_env = "production"
+settings = YAML.load_file("config/application.yml").fetch(rails_env)
 
 app_dir = "#{settings["deployment"]["path"]}/#{settings["deployment"]["app_name"]}/current"
 user, group = settings["deployment"]["worker_user"], settings["deployment"]["worker_group"]
 
 worker_processes 2
 working_directory app_dir
-
 
 # Load app into the master before forking workers for super-fast
 # worker spawn times
@@ -64,15 +64,7 @@ after_fork do |server, worker|
   # Unix forking works, we need to make sure we aren't using any of the parent's
   # sockets, e.g. db connection
   begin
-    uid, gid = Process.euid, Process.egid
-    target_uid = Etc.getpwnam(user).uid
-    target_gid = Etc.getgrnam(group).gid
-    worker.tmp.chown(target_uid, target_gid)
-    if uid != target_uid || gid != target_gid
-      Process.initgroups(user, target_gid)
-      Process::GID.change_privilege(target_gid)
-      Process::UID.change_privilege(target_uid)
-    end
+    worker.user(user, group) if Process.euid == 0
   rescue => e
     if ENV['RAILS_ENV'] == 'development'
       STDERR.puts "couldn't change user"

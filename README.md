@@ -4,20 +4,21 @@ Yet another initial Rails app for start up
 
 或许对于Startup的快速迭代来说，MongoDB才是正确的选择。
 
-##自己YY的一些practice
+##一些代码
 - lib/extras kindeditor和district_select的tag helper
 - lib/oauth_handlers 或许可以抽取成gem，利用facade pattern把人人、微博的相同作用的api包装成统一接口，app/models/authorization.rb 利用delegate直接调用
 - config/environments/production.rb 自定义了一套assets预编译规则，对重型js lib（例如kindeditor）友善
-- config/environments/production.rb 如果在application.yml里配置assets的bucket，直接让upyun接管所有assets
-- config/deploy.rb 你可以只给你的部署账号sudo no password service的权限，释放init.d脚本利用try_su来解决，保证部署账号的权限足够的低并且能够进行一些高危操作
-- lib/generators/script_generator 利用rails generator生成init.d脚本，脚本山寨自gitlab，配合rake task实现释放到/etc/init.d 然后chkconfig on
+- config/environments/production.rb 设置assets_host，直接让upyun接管所有assets
+- config/deploy.rb 自定义的任务部署账号需要提权可以试用try_su方法
 - 开发环境下使用foreman管理app的所有进程，配置在Procfile里，config/environments/development.rb里的```$stdout.sync = true```使得rails log立即输出到stdout
 - app/uploaders/image_uploader.rb 修改了huacnlee的实现，默认图片作为一个asset处理
+- lib/reinforcements/sanitize.rb 基于'sanitize'的rich text sanitizer，基于白名单,可以过滤inline style
+- app/controllers/errors_controller.rb 友善的错误页面
 
 ##组件
 - 完整的部署流程（release code to server+bundle+migrate database+assets precompile+sync assets to upyun+hot deployment）
 - 用户子系统
-- 微博 人人的Oauth接口+ 初步的API调用封装
+- 微博 人人的Oauth接口 + 初步的API调用封装
 - 配置集中化
 - 若干实用的Helper
 - 初步的管理员后台(独立的namespace放与业务有关配合Rails_admin)
@@ -59,16 +60,16 @@ Yet another initial Rails app for start up
 - 访问localhost:3000
 
 ##部署
-- 需要 git、rvm、rvm requirements中的给出的组建
+- 需要 git、rvm、rvm requirements中的给出的组件
 - 配置 nginx（见doc/nginx.conf.sample）
 - 建立专用部署用户（如deploy）给予执行service的sudo权限（见config/deploy.rb注释）
-- 根据需要取消Gemfile中new relic和airbrake的注释，配置config/application.yml database.yml new_relic.yml，模板见各自的sample 
+- 配置config/application.yml database.yml，模板见各自的sample 
+- 自行申请new relic、airbrake、google analytics，根据页面上的提示进行安装，Gemfile里已将有关的gem注释掉
 - cap deploy:setup
 - cap deploy:check 调整直到全部通过
 - cap deploy 有时候sync_to_cdn会出现异常，重试即可
-- cap db:seed 导入初始数据（如有修改，自行编辑db/seeds.rb）
-- 第一次运行需要执行cap service:setup 生成init.d文件
-- cap service:start
+- cap db:seed 导入初始数据（编辑db/seeds.rb来满足需求）
+- cap deploy:start
 - 没有问题，访问你的域名，否则请检查log/unicorn.stderr.log和log/production.log排除
 
 ##注意事项

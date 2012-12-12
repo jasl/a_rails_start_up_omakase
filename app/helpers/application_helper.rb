@@ -28,9 +28,9 @@ module ApplicationHelper
     html.html_safe
   end
 
-  # Glory to Xdite form bootstrap-helper
+  # details to see lib/reinforcements/sanitize.rb
   def safe(html)
-    sanitize( html, :tags => %w(table thead tbody tr td th ol ul li div span font img sup sub br hr a pre p h1 h2 h3 h4 h5 h6), :attributes => %w(style src href size color) )
+    html.sanitize.html_safe
   end
 
   def notice_message

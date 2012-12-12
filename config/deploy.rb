@@ -5,6 +5,10 @@ require "bundler/capistrano"
 require "rvm/capistrano"
 load 'deploy/assets'
 
+# load airbrake
+# require './config/boot'
+# require 'airbrake/capistrano'
+
 def su(*parameters)
   options = parameters.last.is_a?(Hash) ? parameters.pop.dup : {}
   command = parameters.first
@@ -40,12 +44,6 @@ end
 
 settings = YAML.load_file("config/application.yml").fetch('production')
 
-# load airbrake
-if settings["tokens"]["airbrake"] != ""
-  require './config/boot'
-  require 'airbrake/capistrano'
-end
-
 # Set remote server user
 set :user, settings["deployment"]["deploy_user"]
 set :use_sudo, false
@@ -69,7 +67,18 @@ set :copy_exclude, %w".git spec"
 set :rvm_type, :system
 # before 'deploy:setup', 'rvm:install_rvm'
 
-server settings["deployment"]["server"], :app, :web, :db, :primary => true
+# Resque
+require "capistrano-resque"
+# role :resque_worker, "app_domain"
+# role :resque_scheduler, "app_domain"
+set :workers, settings["resque"]["queues"]
+
+# Unicorn
+require 'capistrano-unicorn'
+set :unicorn_bin, 'unicorn_rails'
+set :unicorn_bundle, settings["deployment"]["bundle_wrapper_cmd"]
+
+server settings["deployment"]["server"], :app, :web, :db, :resque_worker, :resque_scheduler, :primary => true
 
 depend :remote, :command, "bundle"
 depend :remote, :command, settings["deployment"]["bundle_wrapper_cmd"]
@@ -83,7 +92,7 @@ namespace :deploy do
   end
 end
 
-after "deploy:assets:precompile", 'deploy:assets:sync_to_cdn'
+# after "deploy:assets:precompile", 'deploy:assets:sync_to_cdn'
 
 namespace :db do
   desc "Migrate database"
@@ -99,31 +108,13 @@ end
 
 after "deploy:finalize_update", "db:migrate"
 
-# You need edit sudoer to give deployment user sudo /sbin/service permission and set no need password
-# e.g: worker ALL = NOPASSWD:/sbin/service
-namespace :service do
-  desc "Setup application server"
-  task :setup, :role => :app do
-    run "cd #{latest_release}; bundle exec rake app:service:generate"
-    try_su "cp #{latest_release}/bin/startup_server /etc/init.d/ -f"
-    try_su "chmod +x /etc/init.d/startup_server"
-  end
+after 'deploy:restart', 'unicorn:reload'
+after "deploy:restart", "resque:restart"
 
-  desc "Start application server"
-  task :start, :roles => :app do
-    run "sudo service startup_server start"
-  end
+after 'deploy:start', 'resque:start'
+after 'deploy:start', 'resque:scheduler:start'
+after 'deploy:start', 'unicorn:start'
 
-  desc "Stop application server"
-  task :stop, :roles => :app do
-    run "sudo service startup_server stop"
-  end
-
-  desc "Restart application server"
-  task :restart, :roles => :app  do
-    run "sudo service startup_server restart"
-  end
-end
-
-#after "deploy:create_symlink", "service:setup"
-after "deploy:create_symlink", "service:restart"
+after 'deploy:stop', 'unicorn:stop'
+after 'deploy:stop', 'resque:scheduler:stop'
+after 'deploy:stop', 'resque:stop'
