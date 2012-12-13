@@ -108,7 +108,6 @@ end
 
 after "deploy:finalize_update", "db:migrate"
 
-after 'deploy:restart', 'unicorn:reload'
 after "deploy:restart", "resque:restart"
 
 after 'deploy:start', 'resque:start'
