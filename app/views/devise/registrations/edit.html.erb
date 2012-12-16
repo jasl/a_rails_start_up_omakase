@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span8">
-      <%= form_for(current_user, :url => user_update_profile_path, :html => {:method => :put, :class => 'form-horizontal'}) do |f| %>
+      <%= form_for(current_user, :url => users_profile_path, :html => {:method => :put, :class => 'form-horizontal'}) do |f| %>
         <fieldset>
           <legend><%= t('devise.views.registrations.edit.title') %></legend>
           <div class="row row-grid">

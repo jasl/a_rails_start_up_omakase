@@ -23,7 +23,6 @@ StartUp::Application.routes.draw do
       get 'resque', :to => "home#resque"
       mount Resque::Server.new, :as => 'resque_panel', :at => "resque_panel"
     end
-
   end
 
   match 'district/:id' => 'district#show'
@@ -33,15 +32,15 @@ StartUp::Application.routes.draw do
   match "/404", :to => "errors#not_found"
   match "/500", :to => "errors#error_occurred"
 
-  devise_for :user, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks", :registrations => "users/registrations"}
-  devise_scope :user do
-    get 'user/binding', :to => 'users/registrations#binding'
-    post 'user/bind', :to => 'users/registrations#bind'
-    put 'user/update_profile', :to => 'users/profiles#update_profile'
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks", :registrations => "users/registrations"} do
+    namespace :users do
+      match 'auth/:action/cancel', :to => "omniauth_cancel_callbacks#:action", :as => 'cancel_omniauth_callback'
+      get 'binding', :to => 'registrations#binding'
+      post 'bind', :to => 'registrations#bind'
+      put 'profile', :to => 'profiles#update'
+    end
   end
   match "profiles/:id" => "users/profiles#show"
-
-  get "home/index"
 
   root :to => "home#index"
 end

@@ -1,6 +1,8 @@
 Yet another initial Rails app for start up
 ======
-这些代码整理改进自我八月到九月开发的喜感网<http://www.xigan.com>第一版的基础部分的代码，同时也是第二版的基础，希望这里面的代码能对他人快速开发产品原型有所帮助。也希望能够帮我review代码，共同进步。我会不定期把改进合并进这里。这个repo另一个目的是记录我对rails app架构的想法。
+这些代码整理改进自我八月到九月开发的喜感网<http://www.xigan.com>第一版的基础部分的代码，同时也是第二版的基础，希望这里面的代码能对他人快速开发产品原型有所帮助。也希望能够帮我review代码，共同进步。我会不定期把改进合并进这里。
+
+这个repo另一个目的是记录我对rails app架构的想法。
 
 或许对于Startup的快速迭代来说，MongoDB才是正确的选择。
 
@@ -50,7 +52,7 @@ Yet another initial Rails app for start up
 - 评论：acts_as_commentable
 - 分页：kaminari
 - 全局配置：settingslogic
-- 前端：compass-rails + jquery-ui-rails + bootstrap
+- 前端：compass-rails + jquery-ui-rails + bootstrap-sass
 
 ##运行开发环境
 - git clone

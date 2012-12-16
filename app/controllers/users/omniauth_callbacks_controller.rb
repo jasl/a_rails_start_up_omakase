@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def after_omniauth_failure_path_for(scope)
-    set_flash_message(:notice, :failure)
+    failure
     super
   end
 
@@ -60,7 +60,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       session[:omniauth] = data
 
       set_flash_message(:notice, :success, :kind => data[:provider])
-      redirect_to user_binding_path
+      redirect_to users_binding_path
     end
   end
 end

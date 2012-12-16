@@ -78,9 +78,9 @@ group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
 
-  # gem 'libv8' # fix therubyracer compiling issue
-  # there has a compiling issue in 0.11, so keep 0.10
-  gem 'therubyracer', '0.10.2', :platforms => :ruby
+  gem 'execjs'
+  gem 'libv8' # fix therubyracer compiling issue
+  gem 'therubyracer'
   gem 'uglifier', '>= 1.0.3'
 
   # UI
