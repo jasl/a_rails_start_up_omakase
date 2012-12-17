@@ -7,9 +7,10 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :async #, omniauth_providers: [:weibo]
 
+  include OAuthAuthorizable
+
   attr_accessible :email, :password, :password_confirmation, :remember_me
   validates :email, :uniqueness => true
-  has_many :authorizations, :dependent => :destroy
 
   # profile
   attr_accessible :nickname, :name, :phone, :location_id, :gender
