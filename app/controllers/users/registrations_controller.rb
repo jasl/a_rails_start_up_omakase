@@ -3,7 +3,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_filter :must_not_sign_in, :only => [:bind, :binding]
 
   def bind
-    # binding info posted here
+    # binding info post to here
     if data = session[:omniauth] and not Authorization.where(provider: data[:provider], uid: data[:uid]).exists?
       # authorization not exists
       resource = User.find_by_email(params[:user][:email])
@@ -23,11 +23,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
       self.resource.nickname ||= data[:info][:nickname]
       self.resource.name ||= data[:info][:name]
-      self.resource.authorizations.build provider: data[:provider],
-                                         uid: data[:uid],
-                                         access_token: data[:access_token],
-                                         expires_at: data[:expires_at],
-                                         refresh_token: data[:refresh_token]
+      self.resource.create_authorization data
 
       if self.resource.save
         if self.resource.active_for_authentication?

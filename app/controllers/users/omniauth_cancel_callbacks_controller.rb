@@ -1,17 +1,20 @@
 # -*- encoding : utf-8 -*-
 class Users::OmniauthCancelCallbacksController < ::ActionController::Base
 
-  def weibo
-    # Sina NYI
-    redirect_to root_path
-  end
+  def self.provides_cancel_callback_for(*args)
+    args[0].each do |provider, uid|
+      class_eval <<-EVAL
+        def #{provider}
+          if record = Authorization.where(:uid => params[:#{uid}]).first
+            record.destroy
+          end
 
-  def xiaonei
-    if record = Authorization.where(:uid => params[:xn_sig_user]).first
-      record.destroy
+          head :no_centent
+        end
+      EVAL
     end
-
-    redirect_to root_path
   end
+
+  provides_cancel_callback_for :xiaonei => :xn_sig_user
 
 end

@@ -11,6 +11,7 @@ class Authorization < ActiveRecord::Base
 
   attr_accessible :provider, :uid, :access_token, :refresh_token, :url, :expires_at
   attr_accessible :provider, :uid, :access_token, :refresh_token, :url, :expires_at, :as => :admin
+
   private
 
   # obj factory

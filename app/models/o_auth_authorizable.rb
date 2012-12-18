@@ -12,4 +12,14 @@ module OAuthAuthorizable
       end
     EVAL
   end
+
+  class_eval <<-EVAL
+    def create_authorization(data)
+      self.authorizations.create provider:data[:provider],
+                                 uid:data[:uid],
+                                 access_token:data[:access_token],
+                                 expires_at:data[:expires_at]
+    end
+  EVAL
+
 end
