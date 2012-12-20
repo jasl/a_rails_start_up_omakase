@@ -22,7 +22,8 @@ module StartUp
     # -- all .rb files in that directory are automatically loaded.
 
     # Custom directories with classes and modules you want to be autoloadable.
-    config.autoload_paths += %W(#{config.root}/lib/oauth_handlers
+    config.autoload_paths += %W(#{config.root}/app/models/concerns
+                                #{config.root}/lib/oauth_handlers
                                 #{config.root}/lib/utils
                                 #{config.root}/lib/form_helpers
                                 #{config.root}/app/jobs)
