@@ -1,5 +1,6 @@
 defaults: &defaults
   domain: ""
+  admin_mail: ""
   site_name: "Start Up"
   keywords: ["start up", "Start Up"]
   description: "Start Up site"
@@ -18,11 +19,12 @@ defaults: &defaults
     worker_user: ""
     worker_group: ""
     deploy_user: ""
+    backup_path: ""
   resque:
     queues:
       mailer: 1
   mailer:
-    sender: "no-reply@start_up.jasl.me"
+    sender: ""
   tokens:
     google_analytics: ""
     oauth:

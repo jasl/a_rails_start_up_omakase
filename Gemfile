@@ -56,6 +56,7 @@ gem 'settingslogic'
 gem 'sanitize' # HTML sanitize
 gem 'rails-i18n'
 gem 'quiet_assets' # disabled assets log
+gem 'whenever', :require => false # a pure ruby impl of crontab w/t friendly dsl
 
 # Server monitoring service. see http://www.newrelic.com about sign up and configuration
 # gem 'newrelic_rpm'
@@ -72,6 +73,9 @@ group :production do
 
   # Application server
   gem 'unicorn'
+
+  # application data backup
+  gem 'backup'
 end
 
 group :assets do
@@ -109,7 +113,7 @@ group :development do
   gem 'capistrano-unicorn'
   gem 'sushi'
   gem 'capistrano_colors'
-  gem 'foreman' # very cool... but... fuk upstart cannot use on production
+  gem 'foreman' # very cool... but... configuration is too simple to use on production
 end
 
 group :development, :test do

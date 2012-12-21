@@ -67,6 +67,10 @@ set :copy_exclude, %w".git spec"
 set :rvm_type, :system
 # before 'deploy:setup', 'rvm:install_rvm'
 
+# Whenever
+require "whenever/capistrano"
+set :whenever_command, "#{settings["deployment"]["bundle_wrapper_cmd"] || "bundle"} exec whenever"
+
 # Resque
 require "capistrano-resque"
 # role :resque_worker, "app_domain"

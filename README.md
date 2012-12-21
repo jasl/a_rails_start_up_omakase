@@ -1,9 +1,8 @@
 Yet another initial Rails app for start up
 ======
-这些代码整理改进自我八月到九月开发的喜感网<http://www.xigan.com>第一版的基础部分的代码，同时也是第二版的基础，希望这里面的代码能对他人快速开发产品原型有所帮助。也希望能够帮我review代码，共同进步。我会不定期把改进合并进这里。
+这些代码整理改进自我八月到九月开发的喜感网<http://www.xigan.com>第一版的基础部分的代码，同时也是第二版的基础，希望这里面的代码能对他人快速开发产品原型有所帮助。也希望能够帮我review代码，共同进步。我会不定期把改进合并进这里。PS：部署和运维比开发难多了...
 
 这个repo另一个目的是记录我对rails app架构的想法。
-
 或许对于Startup的快速迭代来说，MongoDB才是正确的选择。
 
 ##一些代码
@@ -16,9 +15,11 @@ Yet another initial Rails app for start up
 - app/uploaders/image_uploader.rb 修改了huacnlee的实现，默认图片作为一个asset处理
 - lib/reinforcements/sanitize.rb 基于'sanitize'的rich text sanitizer，基于白名单,可以过滤inline style
 - app/controllers/errors_controller.rb 友善的错误页面
+- lib/generators 利用rails generator根据application.yml生成nginx、logrotate、init.d、monit配置文件，使用方法见rails g
 
 ##组件
 - 完整的部署流程（release code to server+bundle+migrate database+assets precompile+sync assets to upyun+hot deployment）
+- 基本的运维配置，monit监控进程（邮件报警）、logrotate分割日志、whenever+backup自动备份
 - 用户子系统
 - 微博 人人的Oauth接口 + 初步的API调用封装
 - 配置集中化
@@ -31,6 +32,10 @@ Yet another initial Rails app for start up
 - Ruby: Ruby 1.9.3
 - 框架：Rails 3.2
 - 数据库：MySQL
+- 计划任务：whenever
+- 备份：backup
+- 进程监控：monit
+- 日志切割：logrotate
 - 文件上传：Carrierwave + 又拍云
 - 缓存、KV存储：Memcache + Redis
 - 任务队列、延迟任务：Resque + Rescue-Scheduler

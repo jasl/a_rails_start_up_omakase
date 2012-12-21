@@ -1,0 +1,71 @@
+#! /bin/bash
+### BEGIN INIT INFO
+# Provides:          <%= Rails.application.engine_name.titleize.chomp(' Application') %>
+# Required-Start:    $local_fs $remote_fs $network $syslog redis-server memcached
+# Required-Stop:     $local_fs $remote_fs $network $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Management application server
+# Description:       Management application server
+### END INIT INFO
+
+DESC="<%= Setting.deployment.app_name %> server"
+
+APP_PATH=<%= "#{Setting.deployment.path}/#{Setting.deployment.app_name}/current" || Rails.root %>
+BUNDLE_CMD="sudo -u <%= Setting.deployment.deploy_user %> <%= Setting.deployment.bundle_wrapper_cmd || "bundle" %>"
+
+PID=$APP_PATH/tmp/pids/unicorn.pid
+# not smart
+RESQUE_PID=$APP_PATH/tmp/pids/resque_work_1.pid
+RESQUE_SCHEDULER_PID=$APP_PATH/tmp/pids/scheduler.pid
+
+DAEMON_OPTS="-c $APP_PATH/config/unicorn/production.rb -E production -D"
+RESQUE_OPTS="QUEUE=* RAILS_ENV=production PIDFILE=$RESQUE_PID"
+RESQUE_SCHEDULER_OPTS="BACKGROUND=yes VERBOSE=1 RAILS_ENV=production PIDFILE=$RESQUE_SCHEDULER_PID"
+
+case "$1" in
+  start)
+        CD_TO_APP_DIR="cd $APP_PATH"
+
+        # Not using BACKGROUND=yes cause it no log work anymore since resque 1.20
+        START_RESQUE_PROCESS="$BUNDLE_CMD exec rake environment resque:work $RESQUE_OPTS"
+        START_RESQUE_SCHEDULER_PROCESS="$BUNDLE_CMD exec rake environment resque:scheduler $RESQUE_SCHEDULER_OPTS"
+        START_DAEMON_PROCESS="$BUNDLE_CMD exec unicorn_rails $DAEMON_OPTS"
+
+        echo -n "Starting $DESC: "
+        $CD_TO_APP_DIR > /dev/null 2>&1 && $START_DAEMON_PROCESS
+        $CD_TO_APP_DIR > /dev/null 2>&1 && $START_RESQUE_PROCESS 2>&1 >> $APP_PATH/log/resque.log &
+        $CD_TO_APP_DIR > /dev/null 2>&1 && $START_RESQUE_SCHEDULER_PROCESS 2>&1 >> $APP_PATH/log/resque_scheduler.log &
+        echo "done."
+        ;;
+  stop)
+        echo -n "Stopping $DESC: "
+        kill -QUIT `cat $PID`
+
+        kill -QUIT `cat $RESQUE_SCHEDULER_PID`
+        rm -rf $RESQUE_SCHEDULER_PID
+
+        for f in $(ls $APP_PATH/tmp/pids/resque_work*.pid)
+        do
+            kill -s QUIT $(cat $f) && rm -rf $f
+        done
+
+        echo "done."
+        ;;
+  restart)
+        echo -n "Restarting $DESC: "
+        kill -USR2 `cat $PID`
+        echo "$NAME."
+        ;;
+  reload)
+        echo -n "Reloading $DESC configuration: "
+        kill -HUP `cat $PID`
+        echo "done."
+        ;;
+  *)
+        echo "Usage: $NAME {start|stop|restart|reload}" >&2
+        exit 1
+        ;;
+esac
+
+exit 0

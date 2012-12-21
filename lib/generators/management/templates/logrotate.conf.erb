@@ -1,0 +1,13 @@
+<%- app_path = "#{Setting.deployment.path}/#{Setting.deployment.app_name}/current" %>
+<%= app_path %>/log/*.log {
+    daily
+    missingok
+    rotate 12
+    compress
+    dateext
+    delaycompress
+    lastaction
+        pid=<%= app_path %>/tmp/pids/unicorn.pid
+        test -s $pid && kill -USR1 "$(cat $pid)"
+    endscript
+}
