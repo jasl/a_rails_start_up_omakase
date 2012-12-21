@@ -85,5 +85,7 @@ Yet another initial Rails app for start up
 - kindeditor不能把他的js后置，所以为了解决这个问题，你需要在使用他的页面上<% has_kindeditor %>
 - 富文本输出<%= safe @post.body %>
 
+##帮助我
+希望我的工作能够为你提供一些思路或者节省工作，如果你发现有不足的地方希望你能够fork&pull request，或者给我发送邮件<jasl9187@hotmail.com>，感谢！
 
 jasl, MIT license.
