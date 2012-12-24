@@ -1,4 +1,5 @@
 User-Agent: *
-Disallow: /users
-Disallow: /profiles
-Disallow: /admin
+Allow: /
+Disallow: /users/
+Disallow: /profiles/
+Disallow: /admin/
