@@ -28,7 +28,7 @@ module ApplicationHelper
     html.html_safe
   end
 
-  # details to see lib/reinforcements/sanitize.rb
+  # details in lib/reinforcements/sanitize.rb
   def safe(html)
     return "" if html.nil? or html.blank?
     html.sanitize.html_safe
