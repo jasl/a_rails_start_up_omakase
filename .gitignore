@@ -74,15 +74,19 @@ pickle-email-*.html
 # vim artifacts
 **.swp
 
+# misc tmp
+.cache
+.tmp
+
 # Service script should generate in each running environments
 /bin/*
 /conf/*
 
-# Ignore uploads
+# uploads
 /uploads/*
 /public/uploads
 
-# Ignore assets
+# assets
 /public/assets
 
 # Configurations
