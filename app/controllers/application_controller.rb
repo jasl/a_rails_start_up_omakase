@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-  self.without_modules ActionController::Compatibility
 
   protect_from_forgery
 

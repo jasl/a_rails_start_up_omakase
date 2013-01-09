@@ -3,7 +3,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def self.provides_callback_for(*providers)
     providers.each do |provider|
-      class_eval <<-EVAL
+      class_eval <<-EVAL, __FILE__, __LINE__ + 1
         def #{provider}
           omniauth = request.env['omniauth.auth']
 
@@ -14,7 +14,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
                    refresh_token: omniauth.credentials.refresh_token,
                    info: {
                      name: omniauth.info.name,
-                     nickname: omniauth.info.nickname
+                     nickname: omniauth.info.nickname,
+                     email: omniauth.info.email
                    }
           }
 
@@ -35,7 +36,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
             session[:omniauth] = data
 
             set_flash_message(:notice, :success, :kind => data[:provider])
-            redirect_to users_binding_path
+            redirect_to users_binding_path(:type => :regist)
           end
         end
       EVAL

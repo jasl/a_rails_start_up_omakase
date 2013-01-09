@@ -32,11 +32,12 @@ StartUp::Application.routes.draw do
   match "/404", :to => "errors#not_found"
   match "/500", :to => "errors#error_occurred"
 
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks", :registrations => "users/registrations"} do
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks",
+                                       :registrations => "users/registrations"} do
     namespace :users do
       match 'auth/:action/cancel', :to => "omniauth_cancel_callbacks#:action", :as => 'cancel_omniauth_callback'
       get 'binding', :to => 'registrations#binding'
-      post 'bind', :to => 'registrations#bind'
+      post 'binding', :to => 'registrations#bind'
       put 'profile', :to => 'profiles#update'
     end
   end

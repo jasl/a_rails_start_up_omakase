@@ -5,7 +5,7 @@
         <fieldset>
           <legend><%= t('devise.views.registrations.new.title') %></legend>
           <div class="row row-grid">
-            <div class="span6 offset1">
+            <div class="span8 offset2">
               <%= print_error_messages resource %>
             </div>
           </div>
@@ -13,6 +13,12 @@
             <%= f.label :email, :class => 'control-label'  %>
             <div class="controls">
               <%= f.email_field :email, :class => 'input- large' %>
+            </div>
+          </div>
+          <div class="control-group">
+            <%= f.label :nickname, :class => 'control-label' %>
+            <div class="controls">
+              <%= f.text_field :nickname, :class => 'input-large' %>
             </div>
           </div>
           <div class="control-group">
@@ -32,17 +38,6 @@
           </div>
         </fieldset>
       <% end %>
-    </div>
-
-    <div class="span4">
-      <div class="well sidebar-nav">
-        <ul class="nav nav-list">
-          <li class="nav-header">
-            <%= t('devise.views.commons.sidebar.title') %>
-          </li>
-          <%= render :partial => "devise/shared/links" %>
-        </ul>
-      </div>
     </div>
   </div>
 </div>

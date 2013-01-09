@@ -1,47 +1,77 @@
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span8">
-      <%= form_for(resource, :as => resource_name, :url => users_bind_path, :html => {:class => 'form-horizontal'} ) do |f| %>
-        <fieldset>
-          <legend><%= t('devise.views.registrations.binding.title') %></legend>
-          <div class="row row-grid">
-            <div class="span6 offset1">
-              <%= print_error_messages resource %>
-            </div>
-          </div>
-          <div class="control-group">
-            <%= f.label :email, :class => 'control-label'  %>
-            <div class="controls">
-              <%= f.email_field :email, :class => 'input- large' %>
-            </div>
-          </div>
-          <div class="control-group">
-            <%= f.label :password, :class => 'control-label'  %>
-            <div class="controls">
-              <%= f.password_field :password, :class => 'input-large' %>
-            </div>
-          </div>
-          <div class="control-group">
-            <%= f.label :password_confirmation, :class => 'control-label'  %>
-            <div class="controls">
-              <%= f.password_field :password_confirmation, :class => 'input-large' %>
-            </div>
-          </div>
-          <div class="form-actions" >
-            <%= f.submit t('devise.views.registrations.binding.submit'), :class => 'btn btn-primary' %>
-          </div>
-        </fieldset>
-      <% end %>
-    </div>
-
-    <div class="span4">
-      <div class="well sidebar-nav">
-        <ul class="nav nav-list">
-          <li class="nav-header">
-            <%= t('devise.views.commons.sidebar.title') %>
+      <div class="tabbable"> <!-- Only required for left/right tabs -->
+        <ul class="nav nav-tabs">
+          <li class="<%= "active" if active_bind_tab?("regist") %>">
+            <a href="#tab1" data-toggle="tab">New user</a>
           </li>
-          <%= render :partial => "devise/shared/links" %>
+          <li class="<%= "active" if active_bind_tab?("bind") %>">
+            <a href="#tab2" data-toggle="tab">Bind to an exists user</a>
+          </li>
         </ul>
+        <div class="tab-content">
+          <div class="tab-pane <%= "active" if active_bind_tab?("regist") %>" id="tab1">
+            <%= form_for(resource, :as => resource_name, :url => users_binding_path(:type => :regist), :html => {:class => 'form-horizontal'} ) do |f| %>
+              <fieldset>
+                <div class="row row-grid">
+                  <div class="span6 offset1">
+                    <%= print_error_messages resource %>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <%= f.label :email, :class => 'control-label'  %>
+                  <div class="controls">
+                    <%= f.email_field :email, :class => 'input- large' %>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <%= f.label :nickname, :class => 'control-label' %>
+                  <div class="controls">
+                    <%= f.text_field :nickname, :class => 'input-large' %>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <%= f.label :password, :class => 'control-label'  %>
+                  <div class="controls">
+                    <%= f.password_field :password, :class => 'input-large' %>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <%= f.label :password_confirmation, :class => 'control-label'  %>
+                  <div class="controls">
+                    <%= f.password_field :password_confirmation, :class => 'input-large' %>
+                  </div>
+                </div>
+                <div class="form-actions" >
+                  <%= f.submit t('devise.views.registrations.binding.submit'), :class => 'btn btn-primary' %>
+                </div>
+              </fieldset>
+            <% end %>
+          </div>
+          <div class="tab-pane <%= "active" if active_bind_tab?("bind") %>" id="tab2">
+            <%= form_for(resource, :as => resource_name, :url => users_binding_path(:type => :bind), :html => {:class => 'form-horizontal'} ) do |f| %>
+              <fieldset>
+                <%= print_error_messages resource %>
+                <div class="control-group">
+                  <%= f.label :email, :class => 'control-label'  %>
+                  <div class="controls">
+                    <%= f.email_field :email, :class => 'input- large' %>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <%= f.label :password, :class => 'control-label'  %>
+                  <div class="controls">
+                    <%= f.password_field :password, :class => 'input-large' %>
+                  </div>
+                </div>
+                <div class="form-actions" >
+                  <%= f.submit t('devise.views.registrations.binding.submit'), :class => 'btn btn-primary' %>
+                </div>
+              </fieldset>
+            <% end %>
+          </div>
+        </div>
       </div>
     </div>
   </div>

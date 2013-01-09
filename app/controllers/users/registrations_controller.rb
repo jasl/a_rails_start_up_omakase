@@ -1,57 +1,50 @@
 # -*- encoding : utf-8 -*-
 class Users::RegistrationsController < Devise::RegistrationsController
-  before_filter :must_not_sign_in, :only => [:bind, :binding]
+  prepend_before_filter :require_no_authentication, :only => [ :bind, :binding ]
+  prepend_before_filter :allow_params_authentication!, :only => [:bind]
+  before_filter :require_oauth_and_not_bound, :only => [:bind, :binding]
 
+  # binding info post to here
   def bind
-    # binding info post to here
-    if data = session[:omniauth] and not Authorization.where(provider: data[:provider], uid: data[:uid]).exists?
-      # authorization not exists
-      resource = User.find_by_email(params[:user][:email])
-      if resource.nil? or not resource.valid_password?(params[:user][:password])
-        # user not exists
-        # or user existed but given a wrong password,
-        #    in this case will continue but should trigger presence validation false when save.
-        build_resource
-      elsif resource.authorizations.where(provider: data[:provider]).exists?
-        # when user existed and given the right password, and already bind the authorization
-        set_flash_message :notice, t('devise.registrations.oauth_already_bind')
-        return redirect_to new_user_session_path
-      else
-        # new user
-        self.resource = resource
-      end
-
-      self.resource.nickname ||= data[:info][:nickname]
-      self.resource.name ||= data[:info][:name]
-      self.resource.create_authorization data
-
-      if self.resource.save
-        if self.resource.active_for_authentication?
-          set_flash_message :notice, :signed_up if is_navigational_format?
-          sign_in(resource_name, self.resource)
+    data = session[:omniauth]
+    case params[:type]
+      when "regist" then
+        build_resource params[:user]
+      when "bind" then
+        self.resource = warden.authenticate!(auth_options)
+        if resource.authorizations.where(provider: data[:provider]).exists?
           session.delete :omniauth
-          respond_with self.resource, :location => after_sign_up_path_for(self.resource)
-        else
-          set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_navigational_format?
-          expire_session_data_after_sign_in!
-          respond_with self.resource, :location => after_inactive_sign_up_path_for(self.resource)
+          # when user existed and given the right password, and already bind the authorization
+          set_flash_message :notice, t('devise.registrations.oauth_already_bind')
+          redirect_to new_user_session_path
         end
       else
-        clean_up_passwords self.resource
-        respond_with self.resource do |format|
-          format.html { render 'devise/registrations/binding' }
-        end
+        redirect_to new_user_registration_path
+    end
+    self.resource.build_authorization data
+
+    if self.resource.save
+      session.delete :omniauth
+      if self.resource.active_for_authentication?
+        set_flash_message :notice, :signed_up if is_navigational_format?
+        sign_in(resource_name, self.resource)
+        respond_with self.resource, :location => after_sign_up_path_for(self.resource)
+      else
+        set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_navigational_format?
+        expire_session_data_after_sign_in!
+        respond_with self.resource, :location => after_inactive_sign_up_path_for(self.resource)
       end
     else
-      # authorization exists
-      set_flash_message :notice, t('devise.registrations.oauth_failure')
-      redirect_to new_user_session_path
+      clean_up_passwords self.resource
+      respond_with self.resource do |format|
+        format.html { render 'devise/registrations/binding' }
+      end
     end
   end
 
   def binding
     if session[:omniauth]
-      resource = build_resource()
+      resource = build_resource(params[:user] || info_from_omniauth)
       respond_with resource
     else
       set_flash_message :notice, t('devise.registrations.oauth_failure')
@@ -59,8 +52,22 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
 
-  private
-  def must_not_sign_in
-    redirect_to root_path if current_user
+  protected
+
+  def require_oauth_and_not_bound
+    # omniauth session lost or authorization exists
+    unless session[:omniauth] or Authorization.where(provider: data[:provider], uid: data[:uid]).exists?
+      set_flash_message :notice, t('devise.registrations.oauth_failure')
+      redirect_to new_user_registration_path
+    end
+  end
+
+  def info_from_omniauth
+    (session[:omniauth].blank? or session[:omniauth][:info].blank?) ?
+        {} : session[:omniauth][:info]
+  end
+
+  def auth_options
+    { :scope => resource_name, :recall => "#{controller_path}#binding" }
   end
 end

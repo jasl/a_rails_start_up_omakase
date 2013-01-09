@@ -13,12 +13,10 @@ class User < ActiveRecord::Base
   validates :email, :uniqueness => true
 
   # profile
-  attr_accessible :nickname, :name, :phone, :location_id, :gender
-  attr_accessible :province, :city, :district
-
+  attr_accessible :nickname, :name, :phone, :location_id, :gender, :province, :city, :district
   attr_accessible :nickname, :name, :phone, :location_id, :gender, :province, :city, :district, :as => :admin
 
-  after_create :send_welcome_mail
+  # after_create :send_welcome_mail
 
   def admin?
     self.role == "admin"
@@ -39,7 +37,7 @@ class User < ActiveRecord::Base
 
   private
 
-  def send_welcome_mail
-    UserMailer.welcome(self.id).deliver!
-  end
+  # def send_welcome_mail
+  #   UserMailer.welcome(self.id).deliver!
+  # end
 end

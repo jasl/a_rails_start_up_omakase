@@ -69,7 +69,7 @@ set :rvm_type, :system
 
 # Whenever
 require "whenever/capistrano"
-set :whenever_command, "#{settings["deployment"]["bundle_wrapper_cmd"] || "bundle"} exec whenever"
+# set :whenever_command, "#{settings["deployment"]["bundle_wrapper_cmd"] || "bundle"} exec whenever"
 
 # Resque
 require "capistrano-resque"

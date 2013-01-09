@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 class Authorization < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :user, :inverse_of => :authorizations
 
   validates :provider, :uid, :access_token, :expires_at, presence: true
   validates :provider, uniqueness: { scope: :user_id }

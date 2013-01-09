@@ -57,6 +57,7 @@ gem 'sanitize' # HTML sanitize
 gem 'rails-i18n'
 gem 'quiet_assets' # disabled assets log
 gem 'whenever', :require => false # a pure ruby impl of crontab w/t friendly dsl
+gem 'backup' # application data backup
 
 # Server monitoring service. see http://www.newrelic.com about sign up and configuration
 # gem 'newrelic_rpm'
@@ -73,9 +74,6 @@ group :production do
 
   # Application server
   gem 'unicorn'
-
-  # application data backup
-  gem 'backup'
 end
 
 group :assets do
@@ -133,4 +131,6 @@ group :test do
   gem "shoulda-matchers"
   gem 'email_spec'
   gem 'resque_spec'
+end
+
 end
