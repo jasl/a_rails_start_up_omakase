@@ -5,42 +5,11 @@ require "bundler/capistrano"
 require "rvm/capistrano"
 load 'deploy/assets'
 
+load 'config/recipes/su'
+
 # load airbrake
 # require './config/boot'
 # require 'airbrake/capistrano'
-
-def su(*parameters)
-  options = parameters.last.is_a?(Hash) ? parameters.pop.dup : {}
-  command = parameters.first
-  user = options[:as] && "-l #{options.delete(:as)}"
-  @password ||= fetch(:su_password, nil) || fetch(:root_password, Capistrano::CLI.password_prompt("root password: "))
-
-  if command
-    command = "su - #{user} -c '#{command}'"
-    run command do |channel, stream, output|
-      channel.send_data("#{@password}\n") if output
-      puts output
-    end
-  else
-    command
-  end
-end
-
-# Runs +command+ as root invoking the command with su -c
-# and handling the root password prompt.
-#
-#   try_su "/etc/init.d/apache reload"
-#   # Executes
-#   # su - -c '/etc/init.d/apache reload'
-#
-def try_su(*args)
-  options = args.last.is_a?(Hash) ? args.pop : {}
-  command = args.shift
-  raise ArgumentError, "too many arguments" if args.any?
-
-  as = options.fetch(:as, fetch(:su_runner, nil)) || 'root'
-  su(command, :as => as)
-end
 
 settings = YAML.load_file("config/application.yml").fetch('production')
 
@@ -63,7 +32,7 @@ set :deploy_to, "#{settings["deployment"]["path"]}/#{settings["deployment"]["app
 set :copy_exclude, %w".git spec"
 
 # RVM
-# set :rvm_ruby_string, settings["deployment"]["rvm_ruby"]
+set :rvm_ruby_string, settings["deployment"]["rvm_ruby"]
 set :rvm_type, :system
 # before 'deploy:setup', 'rvm:install_rvm'
 
@@ -71,16 +40,14 @@ set :rvm_type, :system
 require "whenever/capistrano"
 # set :whenever_command, "#{settings["deployment"]["bundle_wrapper_cmd"] || "bundle"} exec whenever"
 
-# Resque
-require "capistrano-resque"
-# role :resque_worker, "app_domain"
-# role :resque_scheduler, "app_domain"
-set :workers, settings["resque"]["queues"]
-
 # Unicorn
 require 'capistrano-unicorn'
 set :unicorn_bin, 'unicorn_rails'
 set :unicorn_bundle, settings["deployment"]["bundle_wrapper_cmd"]
+
+# Delayed_job
+require "delayed/recipes"
+set :rails_env, "production"
 
 server settings["deployment"]["server"], :app, :web, :db, :resque_worker, :resque_scheduler, :primary => true
 
@@ -111,13 +78,8 @@ namespace :db do
 end
 
 after "deploy:finalize_update", "db:migrate"
-
-after "deploy:restart", "resque:restart"
-
-after 'deploy:start', 'resque:start'
-after 'deploy:start', 'resque:scheduler:start'
 after 'deploy:start', 'unicorn:start'
-
 after 'deploy:stop', 'unicorn:stop'
-after 'deploy:stop', 'resque:scheduler:stop'
-after 'deploy:stop', 'resque:stop'
+after "deploy:stop",    "delayed_job:stop"
+after "deploy:start",   "delayed_job:start"
+after "deploy:restart", "delayed_job:restart"

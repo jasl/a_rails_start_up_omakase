@@ -1,0 +1,66 @@
+#!/bin/sh
+set -u
+set -e
+
+# Feel free to change any of the following variables for your app:
+# export PATH=/usr/local/rvm/bin:$PATH
+
+APP_ROOT=<%= "#{Setting.deployment.path}/#{Setting.deployment.app_name}/current" %>
+PID=$APP_ROOT/tmp/pids/unicorn.pid
+ENV=production
+CMD="<%= Setting.deployment.bundle_wrapper_cmd %> exec unicorn_rails -D -E $ENV -c config/unicorn/production.rb"
+
+old_pid="$PID.oldbin"
+
+cd $APP_ROOT || exit 1
+
+sig () {
+  test -s "$PID" && kill -$1 `cat $PID`
+}
+
+oldsig () {
+  test -s $old_pid && kill -$1 `cat $old_pid`
+}
+
+workersig () {
+  workerpid="$APP_ROOT/tmp/pids/unicorn_worker_$2.pid"
+
+  test -s "$workerpid" && kill -$1 `cat $workerpid`
+}
+
+case $1 in
+  start)
+    sig 0 && echo "Already running" && exit 0
+    $CMD
+    ;;
+  stop)
+    sig QUIT && exit 0
+    echo "Not running"
+    ;;
+  force-stop)
+    sig TERM && exit 0
+    echo "Not running"
+    ;;
+  restart|reload)
+    sig HUP && echo "reloaded OK" && exit 0
+    echo >&2 "Couldn't reload, starting '$CMD' instead"
+    $CMD
+    ;;
+  upgrade)
+    sig USR2 && exit 0
+    echo >&2 "Couldn't upgrade, starting '$CMD' instead"
+    $CMD
+    ;;
+  kill_worker)
+    workersig QUIT $2 && exit 0
+    echo >&2 "Worker not running"
+    ;;
+  rotate)
+    sig USR1 && echo "rotated logs OK" && exit 0
+    echo >&2 "Couldn't rotate logs" && exit 1
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart|kill_worker|upgrade|rotate|force-stop}"
+    exit 1
+    ;;
+esac

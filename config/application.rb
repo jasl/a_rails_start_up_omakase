@@ -23,12 +23,11 @@ module StartUp
 
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths += %W(#{config.root}/app/models/concerns
+                                #{config.root}/app/controllers/concerns
                                 #{config.root}/lib/oauth_handlers
                                 #{config.root}/lib/utils
                                 #{config.root}/lib/form_helpers
                                 #{config.root}/app/jobs)
-    #
-    #config.autoload_paths += get_nested_dir "#{config.root}/app/models"
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
@@ -73,7 +72,13 @@ module StartUp
 
     # Force using rspec
     config.generators do |g|
-      g.test_framework :rspec #=> or whatever
+      g.test_framework :rspec, :fixture => true
+      g.fixture_replacement :factory_girl, :dir => 'spec/factories'
+      g.stylesheets false
+      g.javascripts false
+      g.helper false
+      g.helper_specs false
+      g.view_specs false
     end
 
   end

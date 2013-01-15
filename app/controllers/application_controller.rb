@@ -18,4 +18,16 @@ class ApplicationController < ActionController::Base
     redirect_to root_url
   end
 
+  protected
+
+  # compatible with devise so key named "user_return_to"
+  def store_location
+    session["user_return_to"] = request.original_url
+  end
+
+  def redirect_back_or_default(default)
+    redirect_to(session["user_return_to"] || default)
+    session.delete "user_return_to"
+  end
+
 end

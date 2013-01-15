@@ -1,4 +1,4 @@
-Yet another initial Rails app for start up
+A Rails start up Omakase
 ======
 这些代码整理改进自我八月到九月开发的喜感网<http://www.xigan.com>第一版的基础部分的代码，同时也是第二版的基础，希望这里面的代码能对他人快速开发产品原型有所帮助。也希望能够帮我review代码，共同进步。我会不定期把改进合并进这里。PS：部署和运维比开发难多了...
 
@@ -37,8 +37,8 @@ Yet another initial Rails app for start up
 - 进程监控：monit
 - 日志切割：logrotate
 - 文件上传：Carrierwave + 又拍云
-- 缓存、KV存储：Memcache + Redis
-- 任务队列、延迟任务：Resque + Rescue-Scheduler
+- 缓存：Memcached
+- 任务队列：delayed_job
 - 服务器和站点监控：New relic
 - 程序异常反馈：Airbrake
 - 程序后台：Rails_admin

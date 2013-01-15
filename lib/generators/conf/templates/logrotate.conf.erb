@@ -1,4 +1,4 @@
-<%- app_path = "#{Setting.deployment.path}/#{Setting.deployment.app_name}/current" %>
+<%- app_path = "#{Setting.deployment.path}/#{Setting.deployment.app_name}/current" -%>
 <%= app_path %>/log/*.log {
     daily
     missingok
@@ -7,7 +7,7 @@
     dateext
     delaycompress
     lastaction
-        pid=<%= app_path %>/tmp/pids/unicorn.pid
+        pid=<%= app_path -%>/tmp/pids/unicorn.pid
         test -s $pid && kill -USR1 "$(cat $pid)"
     endscript
 }

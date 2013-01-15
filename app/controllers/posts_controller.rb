@@ -1,11 +1,10 @@
 class PostsController < ApplicationController
   load_and_authorize_resource
+  before_filter :store_location, :only => [:index, :show]
 
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @posts }
@@ -15,10 +14,10 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
-    @post = Post.find(params[:id])
-
     respond_to do |format|
-      format.html # show.html.erb
+      format.html do
+        @comments = @post.comments.page(params[:comments_page]).per(5)
+      end
       format.json { render json: @post }
     end
   end
@@ -26,8 +25,6 @@ class PostsController < ApplicationController
   # GET /posts/new
   # GET /posts/new.json
   def new
-    @post = Post.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @post }
@@ -36,7 +33,6 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
-    @post = Post.find(params[:id])
   end
 
   # POST /posts
@@ -59,8 +55,6 @@ class PostsController < ApplicationController
   # PUT /posts/1
   # PUT /posts/1.json
   def update
-    @post = Post.find(params[:id])
-
     respond_to do |format|
       if @post.update_attributes(params[:post])
         format.html { redirect_to @post, notice: 'Post was successfully updated.' }
@@ -75,7 +69,6 @@ class PostsController < ApplicationController
   # DELETE /posts/1
   # DELETE /posts/1.json
   def destroy
-    @post = Post.find(params[:id])
     @post.destroy
 
     respond_to do |format|

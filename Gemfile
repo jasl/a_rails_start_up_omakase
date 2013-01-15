@@ -42,11 +42,9 @@ gem 'rails_admin'
 gem 'rails_admin_tag_list'
 
 # Task queue
-gem 'resque'
-gem 'resque_mailer'
-gem 'resque-cleaner'
-gem 'resque-scheduler'
-# gem 'resque-status' # can show progress
+gem 'delayed_job'
+gem 'delayed_job_active_record'
+gem 'daemon-spawn'
 
 # WYSIWYG editor
 # gem 'rails_kindeditor' # attachments part not suit for real world
@@ -107,7 +105,6 @@ group :development do
   # Deploy
   gem 'capistrano'
   gem 'rvm-capistrano'
-  gem 'capistrano-resque'
   gem 'capistrano-unicorn'
   gem 'sushi'
   gem 'capistrano_colors'
@@ -131,6 +128,4 @@ group :test do
   gem "shoulda-matchers"
   gem 'email_spec'
   gem 'resque_spec'
-end
-
 end

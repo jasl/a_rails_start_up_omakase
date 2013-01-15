@@ -1,8 +1,6 @@
 <div class="nav-collapse">
   <ul class="nav pull-left">
-    <% if can? :read, Post %>
-      <li><%= link_to 'Post', posts_path %></li>
-    <% end %>
+    <li><%= link_to 'Post', posts_path %></li>
   </ul>
   <ul class="nav pull-right">
     <% if user_signed_in? %>

@@ -1,15 +1,11 @@
 <div>
-  <p>
-    <b>User:</b>
-    <%= comment.user.email %>
-  </p>
-  <p>
-    <b>Comment:</b>
-    <%= safe comment.comment %>
-  </p>
-  <p>
+  <small>
+    <%= comment.user -%>
     <%= link_to 'Destroy Comment', [@post, comment],
                 :confirm => 'Are you sure?',
-                :method => :delete if can? :destroy, comment%>
-  </p>
+                :method => :delete if can? :destroy, comment -%>
+  </small>
+  <div>
+    <%= safe comment.comment -%>
+  </div>
 </div>

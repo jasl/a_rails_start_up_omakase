@@ -1,5 +1,4 @@
 class BaseMailer < ActionMailer::Base
-  include Resque::Mailer
 
   default :from => Setting.mailer.sender
   default :charset => "utf-8"

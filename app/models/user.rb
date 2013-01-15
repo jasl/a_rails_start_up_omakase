@@ -16,8 +16,6 @@ class User < ActiveRecord::Base
   attr_accessible :nickname, :name, :phone, :location_id, :gender, :province, :city, :district
   attr_accessible :nickname, :name, :phone, :location_id, :gender, :province, :city, :district, :as => :admin
 
-  # after_create :send_welcome_mail
-
   def admin?
     self.role == "admin"
   end
@@ -35,9 +33,4 @@ class User < ActiveRecord::Base
     @display_name ||= self.nickname.blank? ? self.email.split('@')[0] : self.nickname
   end
 
-  private
-
-  # def send_welcome_mail
-  #   UserMailer.welcome(self.id).deliver!
-  # end
 end

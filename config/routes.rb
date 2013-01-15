@@ -3,26 +3,11 @@ StartUp::Application.routes.draw do
   mount RailsAdmin::Engine => '/rails_admin', :as => 'rails_admin'
 
   resources :posts do
-    resources :comments, :only => [:create, :destroy]
+    resources :comments, :only => [:create, :destroy, :new]
   end
 
   namespace :admin do
-    get 'home/index'
     root :to => "home#index"
-
-    # Resque authorization
-    resque_constraint = lambda do |request|
-      # authenticate! will return a user instance
-      user = request.env['warden'].authenticate!(:database_authenticatable, :scope => :user )
-
-      return false if user.nil?
-      user.admin? ? true : false
-    end
-
-    constraints resque_constraint do
-      get 'resque', :to => "home#resque"
-      mount Resque::Server.new, :as => 'resque_panel', :at => "resque_panel"
-    end
   end
 
   match 'district/:id' => 'district#show'
@@ -41,7 +26,7 @@ StartUp::Application.routes.draw do
       put 'profile', :to => 'profiles#update'
     end
   end
-  match "profiles/:id" => "users/profiles#show"
+  get "profiles/:id" => "users/profiles#show"
 
   root :to => "home#index"
 end

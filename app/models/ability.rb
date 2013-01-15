@@ -24,9 +24,9 @@ class Ability
     #   can :update, Article, :published => true
     #
     # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
-    cannot :manage, :all
-
     user ||= User.new
+
+    can :read, :all
 
     if user.admin?
       # rails admin
@@ -34,17 +34,17 @@ class Ability
       can :dashboard              # grant access to the dashboard
 
       can :manage, :all
-      return
+      #return
     end
 
     if user.persisted?
-      can :read, Post
       can :create, Post
-      can :manage, Post do |post|
+      can [:update, :destroy], Post do |post|
         post.user == user
       end
+
       can :create, Comment
-      can :destroy, Comment do |comment|
+      can :manage, Comment do |comment|
         comment.user == user
       end
     end

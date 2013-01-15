@@ -1,11 +1,22 @@
-<%= form_for([@post, @post.comments.build]) do |f| %>
-  <div class="field">
-    <%= f.label :comment %><br />
-    <%= f.kindeditor :comment, :height => 100, :items => %w(fontname fontsize | emoticons image link) %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<%- @comment ||= @post.comments.build %>
+<%= form_for([(@post||@comment.commentable), @comment]) do |f| %>
+  <fieldset>
+    <legend>Comment post</legend>
+    <div class="row row-grid">
+      <div class="span8 offset2">
+        <%= print_error_messages @comment %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :comment, :class => 'control-label'  %>
+      <div class="controls">
+        <%= f.kindeditor :comment, :height => 100, :items => %w(fontname fontsize | emoticons image link) %>
+      </div>
+    </div>
+    <div class="form-actions" >
+      <%= f.submit :class => 'btn btn-primary' %>
+    </div>
+  </fieldset>
 <% end %>
 
 <% has_kindeditor %>

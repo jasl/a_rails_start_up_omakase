@@ -1,29 +1,18 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Title:</b>
-  <%= @post.title %>
-</p>
-
-<p>
-  <b>User:</b>
-  <%= @post.user %>
-</p>
-
-<p>
-  <b>Body:</b>
+<div class="header">
+  <h1><%= @post.title %></h1><small><%= @post.user %> <%= @post.created_at.to_date.strftime %></small>
+  <%= link_to 'Edit', edit_post_path(@post), :class => 'btn' if can? :manage, @post %>
+</div>
+<div class="body">
   <%= safe @post.body %>
-</p>
+</div>
 
-<%= link_to 'Edit', edit_post_path(@post) %> |
-<%= link_to 'Back', posts_path %>
+<hr/>
+
+<div>
+  <%= render @comments %>
+  <%= paginate @comments, :param_name => :comments_page %>
+</div>
 
 <div>
   <%= render 'comments/form' %>
 </div>
-
-<div>
-  <%# @post.comments.build will append the record set, so if render form first should use @post.comments[0..-2] %>
-  <%= render @post.comments[0..-2] %>
-</div>
-

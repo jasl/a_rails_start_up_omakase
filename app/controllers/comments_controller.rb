@@ -1,21 +1,34 @@
 class CommentsController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :through => :current_entry
 
   def create
-    comment = current_post.comments.build params[:comment]
-    comment.user = current_user
-    comment.save!
+    @comment = current_entry.comments.build params[:comment]
+    @comment.user = current_user
 
-    redirect_to post_path(params[:post_id]), :notice => 'Comment post successful'
+    respond_to do |format|
+      if @comment.save
+        format.html { redirect_to current_entry, notice: 'Comment post successful.' }
+        format.json { render json: @comment, status: :created, location: current_entry }
+      else
+        format.html { render action: :new }
+        format.json { render json: @comment.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def destroy
-    current_post.comments.find(params[:id]).destroy
-    redirect_to post_path(params[:post_id]), :notice => 'Delete comment successful'
+    current_entry.comments.find(params[:id]).destroy
+
+    respond_to do |format|
+      format.html { redirect_to current_entry, :notice => 'Destroy comment successful' }
+      format.json { head :no_content }
+    end
   end
 
-  private
-  def current_post
+  protected
+
+  def current_entry
     Post.find(params[:post_id])
   end
+
 end

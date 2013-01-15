@@ -25,13 +25,13 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
                                                expires_at: data[:expires_at]
             end
 
+            user = authorization.user
             set_flash_message(:notice, :signed_in)
-            sign_in(:user, authorization.user)
-            redirect_to root_path
+            sign_in_and_redirect user
           elsif current_user
             current_user.create_authorization data
 
-            redirect_to root_path
+            after_sign_in_path_for(current_user)
           else
             session[:omniauth] = data
 
