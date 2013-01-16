@@ -52,7 +52,11 @@
           <div class="tab-pane <%= "active" if active_bind_tab?("bind") %>" id="tab2">
             <%= form_for(resource, :as => resource_name, :url => users_binding_path(:type => :bind), :html => {:class => 'form-horizontal'} ) do |f| %>
               <fieldset>
-                <%= print_error_messages resource %>
+                <div class="row row-grid">
+                  <div class="span6 offset1">
+                    <%= print_error_messages resource %>
+                  </div>
+                </div>
                 <div class="control-group">
                   <%= f.label :email, :class => 'control-label'  %>
                   <div class="controls">

@@ -22,8 +22,4 @@ module OAuthAuthorizable
                          access_token:data[:access_token],
                          expires_at:data[:expires_at]
   end
-
-  module ClassMethods
-
-  end
 end
