@@ -44,6 +44,7 @@ gem 'rails_admin_tag_list'
 # Task queue
 gem 'delayed_job'
 gem 'delayed_job_active_record'
+gem 'dj_mailer' # send mail using classic api
 gem 'daemon-spawn'
 
 # WYSIWYG editor

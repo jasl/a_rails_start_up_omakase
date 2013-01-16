@@ -1,2 +1,2 @@
 app: bundle exec rails s
-resque: bundle exec rake environment resque:work QUEUE=* PIDFILE=tmp/pids/resque.pid RAILS_ENV=development
+delayed_job: script/delayed_job_dev

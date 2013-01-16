@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
   validates :email, :uniqueness => true
 
+  after_create :send_welcome
+
   # profile
   attr_accessible :nickname, :name, :phone, :location_id, :gender, :province, :city, :district
   attr_accessible :nickname, :name, :phone, :location_id, :gender, :province, :city, :district, :as => :admin
@@ -31,6 +33,12 @@ class User < ActiveRecord::Base
 
   def to_s
     @display_name ||= self.nickname.blank? ? self.email.split('@')[0] : self.nickname
+  end
+
+  private
+
+  def send_welcome
+    UserMailer.welcome(self).deliver
   end
 
 end

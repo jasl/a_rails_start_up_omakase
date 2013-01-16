@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+# -*- ruby -*-
+require 'rubygems'
+
+RAILS_ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+
+ENV['RAILS_ENV'] = 'development'
+require File.join(RAILS_ROOT, 'config', 'environment')
+
+Delayed::Worker.new.start
+
+puts "delayed_job start"
