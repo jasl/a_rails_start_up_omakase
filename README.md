@@ -16,6 +16,7 @@ A Rails start up Omakase
 - lib/reinforcements/sanitize.rb 基于'sanitize'的rich text sanitizer，基于白名单,可以过滤inline style
 - app/controllers/errors_controller.rb 友善的错误页面
 - lib/generators 利用rails generator根据application.yml生成nginx、logrotate、init.d、monit配置文件，使用方法见rails g
+- monit调试比较坑爹，试试用script/debug_monit包装一下命令，你可能需要把它放到一个任何用户都访问到的地方比如/usr/bin
 
 ##组件
 - 完整的部署流程（release code to server+bundle+migrate database+assets precompile+sync assets to upyun+hot deployment）
@@ -34,12 +35,11 @@ A Rails start up Omakase
 - 数据库：MySQL
 - 计划任务：whenever
 - 备份：backup
-- 进程监控：monit
 - 日志切割：logrotate
 - 文件上传：Carrierwave + 又拍云
 - 缓存：Memcached
 - 任务队列：delayed_job
-- 服务器和站点监控：New relic
+- 服务器和站点监控：New relic + monit
 - 程序异常反馈：Airbrake
 - 程序后台：Rails_admin
 - 部署：Capistrano
@@ -76,7 +76,6 @@ A Rails start up Omakase
 - cap deploy:check 调整直到全部通过
 - cap deploy 有时候sync_to_cdn会出现异常，重试即可
 - cap db:seed 导入初始数据（编辑db/seeds.rb来满足需求）
-- cap deploy:start
 - 没有问题，访问你的域名，否则请检查log/unicorn.stderr.log和log/production.log排除
 
 ##注意事项
