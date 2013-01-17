@@ -3,19 +3,19 @@
     <div class="span8">
       <div class="tabbable"> <!-- Only required for left/right tabs -->
         <ul class="nav nav-tabs">
-          <li class="<%= "active" if active_bind_tab?("regist") %>">
+          <li class="<%= "active" unless active_bind_tab? %>">
             <a href="#tab1" data-toggle="tab">New user</a>
           </li>
-          <li class="<%= "active" if active_bind_tab?("bind") %>">
+          <li class="<%= "active" if active_bind_tab? %>">
             <a href="#tab2" data-toggle="tab">Bind to an exists user</a>
           </li>
         </ul>
         <div class="tab-content">
-          <div class="tab-pane <%= "active" if active_bind_tab?("regist") %>" id="tab1">
-            <%= form_for(resource, :as => resource_name, :url => users_binding_path(:type => :regist), :html => {:class => 'form-horizontal'} ) do |f| %>
+          <div class="tab-pane <%= "active" unless active_bind_tab? %>" id="tab1">
+            <%= form_for(resource, :as => resource_name, :url => users_binding_path, :html => {:class => 'form-horizontal'} ) do |f| %>
               <fieldset>
                 <div class="row row-grid">
-                  <div class="span6 offset1">
+                  <div class="span10 offset1">
                     <%= print_error_messages resource %>
                   </div>
                 </div>
@@ -49,14 +49,9 @@
               </fieldset>
             <% end %>
           </div>
-          <div class="tab-pane <%= "active" if active_bind_tab?("bind") %>" id="tab2">
+          <div class="tab-pane <%= "active" if active_bind_tab? %>" id="tab2">
             <%= form_for(resource, :as => resource_name, :url => users_binding_path(:type => :bind), :html => {:class => 'form-horizontal'} ) do |f| %>
               <fieldset>
-                <div class="row row-grid">
-                  <div class="span6 offset1">
-                    <%= print_error_messages resource %>
-                  </div>
-                </div>
                 <div class="control-group">
                   <%= f.label :email, :class => 'control-label'  %>
                   <div class="controls">

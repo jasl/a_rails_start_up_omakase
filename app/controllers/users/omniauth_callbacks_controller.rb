@@ -17,7 +17,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
                      nickname: omniauth.info.nickname,
                      email: omniauth.info.email
                    }
-          }
+                  }
 
           if authorization = Authorization.where(provider: data[:provider], uid: data[:uid].to_s).first
             if data[:access_token] != authorization.access_token

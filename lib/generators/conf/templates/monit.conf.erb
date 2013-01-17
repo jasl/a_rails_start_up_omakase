@@ -35,7 +35,7 @@ check process <%= Setting.deployment.app_name %>_unicorn_worker_<%= n %> with pi
   group <%= Setting.deployment.app_name %>_unicorn_worker
   start program = "/bin/true"
   stop program = "/etc/init.d/unicorn_<%= Setting.deployment.app_name %> kill_worker <%= n %>" as uid root
-  if mem > 100.0 MB for 1 cycles then restart
+  if mem > 200.0 MB for 1 cycles then restart
   if cpu > 50% for 3 cycles then restart
   # if 5 restarts within 5 cycles then timeout
   alert <%= Setting.admin_mail %> only on { pid }
