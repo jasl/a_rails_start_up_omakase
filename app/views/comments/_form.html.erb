@@ -1,5 +1,5 @@
 <%- @comment ||= @post.comments.build %>
-<%= form_for([(@post||@comment.commentable), @comment]) do |f| %>
+<%= form_for([@comment.commentable, @comment]) do |f| %>
   <fieldset>
     <legend>Comment post</legend>
     <div class="row row-grid">

@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  load_and_authorize_resource :through => :commentable_entry
+  load_and_authorize_resource :comment, :through => :commentable_entry
 
   def create
     @comment = commentable_entry.comments.build params[:comment]
@@ -22,6 +22,13 @@ class CommentsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to commentable_entry, :notice => 'Destroy comment successful' }
       format.json { head :no_content }
+    end
+  end
+
+  def new
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @comment }
     end
   end
 
