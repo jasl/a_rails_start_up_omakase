@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(:version => 20130111180241) do
 
   create_table "comments", :force => true do |t|
     t.string   "title",            :limit => 50, :default => ""
-    t.text     "comment",                                                 :null => false
+    t.text     "body",                                                    :null => false
     t.integer  "commentable_id",                                          :null => false
     t.string   "commentable_type",                                        :null => false
     t.integer  "user_id",                                                 :null => false

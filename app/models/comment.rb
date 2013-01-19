@@ -13,9 +13,9 @@ class Comment < ActiveRecord::Base
   # NOTE: Comments belong to a user
   belongs_to :user
 
-  validates :comment, :presence => true
+  validates :body, :presence => true
 
-  attr_accessible :comment, :title
+  attr_accessible :body, :title
 
-  attr_accessible :comment, :title, :state, :as => :admin
+  attr_accessible :body, :title, :state, :as => :admin
 end

@@ -1,11 +1,12 @@
 <div>
   <small>
     <%= comment.user -%>
-    <%= link_to 'Destroy Comment', [@post, comment],
+    <%= link_to 'Edit', [:edit, comment.commentable, comment] if can? :update, comment -%>
+    <%= link_to 'Destroy', [comment.commentable, comment],
                 :confirm => 'Are you sure?',
                 :method => :delete if can? :destroy, comment -%>
   </small>
   <div>
-    <%= safe comment.comment -%>
+    <%= safe comment.body -%>
   </div>
 </div>

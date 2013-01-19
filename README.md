@@ -22,7 +22,7 @@ A Rails start up Omakase
 - 完整的部署流程（release code to server+bundle+migrate database+assets precompile+sync assets to upyun+hot deployment）
 - 基本的运维配置，monit监控进程（邮件报警）、logrotate分割日志、whenever+backup自动备份
 - 用户子系统
-- 微博 人人的Oauth接口 + 初步的API调用封装
+- 微博 人人的Oauth接口 + 初步的API调用封装(facade pattern)
 - 配置集中化
 - 若干实用的Helper
 - 初步的管理员后台(独立的namespace放与业务有关配合Rails_admin)
@@ -68,7 +68,7 @@ A Rails start up Omakase
 
 ##部署
 - 需要 git、rvm、rvm requirements中的给出的组件
-- 配置 nginx（见doc/nginx.conf.sample）
+- 生成配置文件(```rails g conf:[monit|unicorn|log_rotate|delayed_job|nginx]```)、复制到对应软件的配置路径
 - 建立专用部署用户（如deploy）给予执行service的sudo权限（见config/deploy.rb注释）
 - 配置config/application.yml database.yml，模板见各自的sample 
 - 自行申请new relic、airbrake、google analytics，根据页面上的提示进行安装，Gemfile里已将有关的gem注释掉

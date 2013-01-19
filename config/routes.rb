@@ -3,7 +3,7 @@ StartUp::Application.routes.draw do
   mount RailsAdmin::Engine => '/rails_admin', :as => 'rails_admin'
 
   resources :posts do
-    resources :comments, :only => [:create, :destroy, :new]
+    resources :comments
   end
 
   namespace :admin do

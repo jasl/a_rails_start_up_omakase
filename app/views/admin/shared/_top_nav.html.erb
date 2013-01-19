@@ -2,31 +2,31 @@
   <ul class="nav pull-left">
   </ul>
   <ul class="nav pull-right">
-    <% if user_signed_in? %>
+    <%- if user_signed_in? -%>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           <%= current_user.email %>
           <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-          <% if current_user.admin? %>
+          <%- if current_user.admin? -%>
             <li><%= link_to(t('devise.navigation.back_to_homepage'), root_path) %></li>
             <li class="divider"></li>
             <li><%= link_to(t('devise.navigation.admin'), admin_root_path) %></li>
             <li><%= link_to(t('devise.navigation.rails_admin'), rails_admin_path) %></li>
             <li class="divider"></li>
-          <% end %>
+          <%- end -%>
           <li><%= link_to(t('devise.navigation.change_registration'), edit_user_registration_path) %></li>
           <li><%= link_to t('devise.navigation.sign_out'), destroy_user_session_path, :method => :delete %></li>
         </ul>
       </li>
-    <% else %>
+    <%- else -%>
       <li <%= 'class=active' if current_page? new_user_registration_path %>>
         <%= link_to t('devise.navigation.sign_up'), new_user_registration_path %>
       </li>
       <li <%= 'class=active' if current_page? new_user_session_path %>>
         <%= link_to t('devise.navigation.sign_in'), new_user_session_path %>
       </li>
-    <% end %>
+    <%- end -%>
   </ul>
 </div>

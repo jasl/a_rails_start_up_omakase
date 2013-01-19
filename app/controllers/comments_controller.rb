@@ -1,14 +1,14 @@
 class CommentsController < ApplicationController
-  load_and_authorize_resource :comment, :through => :commentable_entry
+  load_and_authorize_resource :comment
 
   def create
-    @comment = commentable_entry.comments.build params[:comment]
+    @comment = commentable_record.comments.build params[:comment]
     @comment.user = current_user
 
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to commentable_entry, notice: 'Comment post successful.' }
-        format.json { render json: @comment, status: :created, location: commentable_entry }
+        format.html { redirect_to commentable_record, notice: 'Comment post successful.' }
+        format.json { render json: @comment, status: :created, location: commentable_record }
       else
         format.html { render action: :new }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
@@ -17,24 +17,48 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    commentable_entry.comments.find(params[:id]).destroy
+    @comment.destroy
 
     respond_to do |format|
-      format.html { redirect_to commentable_entry, :notice => 'Destroy comment successful' }
+      format.html { redirect_to commentable_record, :notice => 'Destroy comment successful' }
       format.json { head :no_content }
     end
   end
 
   def new
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.json { render json: @comment }
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    respond_to do |format|
+      if @comment.update_attributes(params[:comment])
+        format.html { redirect_to commentable_record, notice: 'Comment was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: :edit }
+        format.json { render json: @comment.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def index
+    @comments = @comments.page params[:page]
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @comments }
     end
   end
 
   protected
 
-  def commentable_entry
+  def commentable_record
     Post.find(params[:post_id])
   end
 

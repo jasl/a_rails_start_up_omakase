@@ -6,7 +6,6 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :async #, omniauth_providers: [:weibo]
-
   include OAuthAuthorizable
 
   attr_accessible :email, :password, :password_confirmation, :remember_me
