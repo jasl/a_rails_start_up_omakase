@@ -17,6 +17,7 @@ A Rails start up Omakase
 - app/controllers/errors_controller.rb 友善的错误页面
 - lib/generators 利用rails generator根据application.yml生成nginx、logrotate、init.d、monit配置文件，使用方法见rails g
 - monit调试比较坑爹，试试用script/debug_monit包装一下命令，你可能需要把它放到一个任何用户都访问到的地方比如/usr/bin
+- config/deploy.rb, /config/deploy/* 支持多环境部署，例如```STAGE=staging cap deploy```部署到staging环境。
 
 ##组件
 - 完整的部署流程（release code to server+bundle+migrate database+assets precompile+sync assets to upyun+hot deployment）
@@ -27,6 +28,7 @@ A Rails start up Omakase
 - 若干实用的Helper
 - 初步的管理员后台(独立的namespace放与业务有关配合Rails_admin)
 - Kindeditor集成+图片上传的服务器端
+- 多环境部署
 
 ##方案
 - Ruby管理：RVM

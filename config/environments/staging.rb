@@ -56,7 +56,7 @@ StartUp::Application.configure do
   # config.force_ssl = true
 
   # See everything in the log (default is :info)
-  # config.log_level = :debug
+  config.log_level = :debug
 
   # Prepend all log lines with the following tags
   # config.log_tags = [ :subdomain, :uuid ]
@@ -66,10 +66,10 @@ StartUp::Application.configure do
   config.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.log")
 
   # Use a different cache store in production
-  config.cache_store = [:dalli_store,"127.0.0.1", {:namespace => "start_up", :compress => true}]
+  config.cache_store = [:dalli_store,"127.0.0.1", {:namespace => "start_up_staging", :compress => true}]
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
-  config.action_controller.asset_host = Setting.upyun.assets.bucket_domain if Setting.upyun['assets']
+  # config.action_controller.asset_host = Setting.upyun.assets.bucket_domain
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   #config.assets.precompile = [

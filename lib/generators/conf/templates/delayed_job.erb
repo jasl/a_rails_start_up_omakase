@@ -8,7 +8,7 @@ source /usr/local/rvm/environments/<%= Setting.deployment.rvm_ruby -%>
 
 APP_ROOT=<%= "#{Setting.deployment.path}/#{Setting.deployment.app_name}/current" %>
 PID=$APP_ROOT/tmp/pids/delayed_job.pid
-ENV=production
+ENV=<%= Rails.env %>
 CMD="script/delayed_job"
 
 cd $APP_ROOT || exit 1

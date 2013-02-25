@@ -83,3 +83,5 @@ module StartUp
 
   end
 end
+
+Sprockets::Compressors.register_css_compressor(:scss, 'Sass::Rails::CssCompressor', :require => 'sass/rails/compressor')

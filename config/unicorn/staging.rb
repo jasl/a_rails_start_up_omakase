@@ -1,4 +1,4 @@
-rails_env = 'production'
+rails_env = 'staging'
 settings = YAML.load_file('config/application.yml').fetch(rails_env)
 
 app_dir = "#{settings['deployment']['path']}/#{settings['deployment']['app_name']}/current"
@@ -16,8 +16,8 @@ timeout 30
 # listen on a Unix domain socket and/or a TCP port,
 
 #listen 8080 # listen to port 8080 on all TCP interfaces
-listen '127.0.0.1:8080'  # listen to port 8080 on the loopback interface
-# listen "/tmp/sockets/#{settings['deployment']['app_name']}.sock", :backlog => 64
+listen '127.0.0.1:9090'  # listen to port 8080 on the loopback interface
+# listen "/tmp/sockets/#{settings['deployment']['app_name']}_staging.sock", :backlog => 64
 
 pid "#{app_dir}/tmp/pids/unicorn.pid"
 stderr_path "#{app_dir}/log/unicorn.stderr.log"

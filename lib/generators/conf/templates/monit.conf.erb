@@ -30,7 +30,7 @@ check process <%= Setting.deployment.app_name %>_unicorn with pidfile <%= unicor
   stop program = "/etc/init.d/unicorn_<%= Setting.deployment.app_name %> stop" as uid <%= Setting.deployment.deploy_user %>
 
 <%- Setting.deployment.worker_processes.times do |n| -%>
-  <%- pid = unicorn_pid.sub(".pid", "_worker_#{n}.pid") -%>
+  <%- pid = unicorn_pid.sub('.pid', "_worker_#{n}.pid") -%>
 check process <%= Setting.deployment.app_name %>_unicorn_worker_<%= n %> with pidfile <%= pid %>
   group <%= Setting.deployment.app_name %>_unicorn_worker
   start program = "/bin/true"

@@ -1,5 +1,5 @@
 <%- app_path = "#{Setting.deployment.path}/#{Setting.deployment.app_name}/current" -%>
-upstream <%= Setting.deployment.app_name -%> {
+upstream <%= "#{Setting.deployment.app_name}_#{Rails.env}" %> {
     # server unix:/tmp/sockets/unicorn.sock fail_timeout=0;
     server 127.0.0.1:8080 fail_timeout=0;
 }
@@ -25,7 +25,7 @@ server {
         proxy_redirect off;
 
         if (!-f $request_filename) {
-            proxy_pass http://<%= Setting.deployment.app_name -%>;
+            proxy_pass http://<%= "#{Setting.deployment.app_name}_#{Rails.env}" -%>;
             break;
         }
     }

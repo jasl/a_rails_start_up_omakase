@@ -3,8 +3,8 @@ source 'https://rubygems.org'
 
 gem 'rails', '~> 3.2.8'
 
-# Site map
-# gem 'sitemap' # seems not suitable chinese site
+# Site map generator
+# gem 'sitemap_generator'
 
 # User
 gem 'devise'
@@ -28,7 +28,7 @@ gem 'acts_as_commentable'
 gem 'carrierwave'
 # gem 'mini_magick' # when using upyun, this is no need
 gem 'carrierwave-upyun'
-gem "rest-client" # for up yun
+gem 'rest-client' # for up yun
 
 # UI
 gem 'jquery-rails'
@@ -80,7 +80,6 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
 
   gem 'execjs'
-  gem 'libv8' # fix therubyracer compiling issue
   gem 'therubyracer'
   gem 'uglifier', '>= 1.0.3'
 
@@ -100,7 +99,7 @@ group :development do
   gem 'request-log-analyzer'
 
   # Debugger
-  gem "pry"
+  gem 'pry'
   gem 'pry-rails'
 
   # Deploy
@@ -113,20 +112,19 @@ group :development do
 end
 
 group :development, :test do
-  gem "letter_opener" # send mail to broswer, not really send
-  gem "rspec-rails"
-  gem "awesome_print"
+  gem 'letter_opener' # send mail to broswer, not really send
+  gem 'rspec-rails'
+  gem 'awesome_print'
 
   gem 'sqlite3'
   gem 'thin'
 end
 
 group :test do
-  gem "capybara"
-  gem "database_cleaner"
-  gem "launchy"
+  gem 'capybara'
+  gem 'database_cleaner'
+  gem 'launchy'
   gem 'factory_girl'
-  gem "shoulda-matchers"
+  gem 'shoulda-matchers'
   gem 'email_spec'
-  gem 'resque_spec'
 end
