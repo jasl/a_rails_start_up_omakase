@@ -4,17 +4,16 @@ require 'sushi/ssh'
 require 'bundler/capistrano'
 require 'rvm/capistrano'
 load 'deploy/assets'
-
-env = ENV['STAGE'] || 'production'
-load "config/deploy/#{env}.rb"
 # load 'config/recipes/su'
 
-# load airbrake
-# require './config/boot'
-# require 'airbrake/capistrano'
+env = ENV['STAGE'] || 'production'
+
+settings = YAML.load_file('config/application.yml').fetch(env)
+
+set :rails_env, env
 
 # Set remote server user
-# set :user, settings['deployment']['deploy_user']
+set :user, settings['deployment']['deploy_user']
 set :use_sudo, false
 
 # Fix RVM
@@ -22,17 +21,17 @@ $:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 
 default_run_options[:pty] = true
 
-#set :application, settings['deployment']['app_name']
-#set :repository, settings['deployment']['repository']
-#set :branch, settings['deployment']['branch']
+set :application, settings['deployment']['app_name']
+set :repository, settings['deployment']['repository']
+set :branch, settings['deployment']['branch']
 set :scm, :git
 ssh_options[:forward_agent] = true
 
-#set :deploy_to, "#{settings['deployment']['path']}/#{settings['deployment']['app_name']}"
+set :deploy_to, "#{settings['deployment']['path']}/#{settings['deployment']['app_name']}"
 set :copy_exclude, %w".git spec"
 
 # RVM
-#set :rvm_ruby_string, settings['deployment']['rvm_ruby']
+set :rvm_ruby_string, settings['deployment']['rvm_ruby']
 set :rvm_type, :system
 # before 'deploy:setup', 'rvm:install_rvm'
 
@@ -49,8 +48,6 @@ set :unicorn_bin, 'unicorn_rails'
 require 'delayed/recipes'
 set :rails_stage, rails_env
 
-# server settings['deployment']['server'], :app, :web, :db, :primary => true
-
 load 'config/recipes/db'
 
 after 'deploy:finalize_update', 'db:migrate'
@@ -59,3 +56,5 @@ after 'deploy:stop', 'unicorn:stop'
 after 'deploy:stop', 'delayed_job:stop'
 after 'deploy:start', 'delayed_job:start'
 after 'deploy:restart', 'delayed_job:restart'
+
+eval File.read "config/deploy/#{env}.rb"
