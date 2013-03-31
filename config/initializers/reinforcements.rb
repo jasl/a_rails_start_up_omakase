@@ -1,1 +1,1 @@
-load "#{Rails.root}/lib/reinforcements/sanitize.rb"
+Dir["#{Rails.root}/lib/reinforcements/*.rb"].each { |f| require(f) }

@@ -35,10 +35,6 @@ set :rvm_ruby_string, settings['deployment']['rvm_ruby']
 set :rvm_type, :system
 # before 'deploy:setup', 'rvm:install_rvm'
 
-# Whenever
-require 'whenever/capistrano'
-# set :whenever_command, "#{settings["deployment"]["bundle_wrapper_cmd"] || "bundle"} exec whenever"
-
 # Unicorn
 require 'capistrano-unicorn'
 set :unicorn_bin, 'unicorn_rails'
@@ -53,6 +49,7 @@ load 'config/recipes/db'
 after 'deploy:finalize_update', 'db:migrate'
 after 'deploy:start', 'unicorn:start'
 after 'deploy:stop', 'unicorn:stop'
+after 'deploy:restart', 'unicorn:restart'
 after 'deploy:stop', 'delayed_job:stop'
 after 'deploy:start', 'delayed_job:start'
 after 'deploy:restart', 'delayed_job:restart'

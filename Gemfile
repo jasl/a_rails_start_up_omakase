@@ -48,7 +48,7 @@ gem 'dj_mailer' # send mail using classic api
 gem 'daemon-spawn'
 
 # WYSIWYG editor
-# gem 'rails_kindeditor' # attachments part not suit for real world
+gem 'ueditor_rails', :git => 'https://github.com/jasl/ueditor_rails.git'
 
 # Misc
 gem 'settingslogic'

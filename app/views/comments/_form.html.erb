@@ -10,7 +10,7 @@
     <div class="control-group">
       <%= f.label :body, :class => 'control-label' -%>
       <div class="controls">
-        <%= f.kindeditor :body, :height => 100, :items => %w(fontname fontsize | emoticons image link) %>
+        <%= f.ueditor_text :body, :height => 100, :toolbars => [["bold","italic","underline"]] %>
       </div>
     </div>
     <div class="form-actions" >
@@ -19,4 +19,5 @@
   </fieldset>
 <% end %>
 
-<%- has_kindeditor -%>
+<%- has_ueditor -%>
+<%- has_ueditor -%>

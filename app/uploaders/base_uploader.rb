@@ -1,10 +1,7 @@
 # encoding: utf-8
 
 class BaseUploader < CarrierWave::Uploader::Base
-  storage CarrierWave::Storage::UpYun
-
-  self.upyun_bucket = Setting.upyun.images.bucket
-  self.upyun_bucket_domain = Setting.upyun.images.bucket_domain
+  storage :upyun
   self.upyun_username = Setting.upyun.username
   self.upyun_password = Setting.upyun.password
 
@@ -18,5 +15,4 @@ class BaseUploader < CarrierWave::Uploader::Base
       "#{@name}#{File.extname(original_filename).downcase}"
     end
   end
-
 end

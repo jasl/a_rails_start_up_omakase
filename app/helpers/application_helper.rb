@@ -9,10 +9,10 @@ module ApplicationHelper
     errors = resource.errors.full_messages.uniq
     messages = errors.map { |msg| content_tag(:li, msg) }.join
     if errors.count > 1
-      sentence = I18n.t("errors.messages.not_saved.other",
+      sentence = I18n.t('errors.messages.not_saved.other',
                         :count => errors.count)
     else
-      sentence = I18n.t("errors.messages.not_saved.one")
+      sentence = I18n.t('errors.messages.not_saved.one')
     end
 
     html = <<-HTML
@@ -93,20 +93,20 @@ module ApplicationHelper
 
   def has_specified_stylesheet(css = controller_name)
     content_for :css do
-      stylesheet_link_tag css, :media => "all"
+      stylesheet_link_tag css, :media => 'all'
     end
   end
 
-  def has_kindeditor
+  def has_ueditor
     unless defined? @has_kindeditor
-      has_specified_javascript 'kindeditor'
-      @has_kindeditor = true
+      has_specified_javascript 'ueditor_config'
+      @has_ueditor = true
     end
   end
 
   def has_district_selects
     unless defined? @has_district_selects
-      has_specified_javascript "district_selects"
+      has_specified_javascript 'district_selects'
       @has_district_selects = true
     end
   end

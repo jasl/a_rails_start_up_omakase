@@ -29,6 +29,9 @@ defaults: &defaults
       versions: ["100x100"]
       bucket: ""
       bucket_domain: ""
+    files:
+      bucket: ""
+      bucket_domain: ""
 #    assets:
 #      bucket: ""
 #      bucket_domain: ""

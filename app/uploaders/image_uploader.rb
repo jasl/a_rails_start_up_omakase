@@ -3,6 +3,8 @@
 # require 'carrierwave/processing/mini_magick' # no use when using upyun
 
 class ImageUploader < BaseUploader
+  self.upyun_bucket = Setting.upyun.images.bucket
+  self.upyun_bucket_domain = Setting.upyun.images.bucket_domain
 
   # for extend
   def blank_image
