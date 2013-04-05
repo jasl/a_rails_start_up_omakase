@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-# require 'carrierwave/processing/mini_magick' # no use when using upyun
+# require 'carrierwave/processing/mini_magick'
 
 class ImageUploader < BaseUploader
   self.upyun_bucket = Setting.upyun.images.bucket
@@ -8,7 +8,7 @@ class ImageUploader < BaseUploader
 
   # for extend
   def blank_image
-    "blank.png"
+    'img.png'
   end
 
   # versions is already used
@@ -21,9 +21,9 @@ class ImageUploader < BaseUploader
   def blank_url
     asset_host = Rails.configuration.action_controller[:asset_host]
     if asset_host
-      "http://#{asset_host}/assets/#{blank_image}"
+      "http://#{asset_host}/assets/default/#{blank_image}"
     else
-      "/assets/#{blank_image}"
+      "/assets/default/#{blank_image}"
     end
   end
 
@@ -43,5 +43,9 @@ class ImageUploader < BaseUploader
 
   def extension_white_list
     %w(jpg jpeg gif png)
+  end
+
+  def blank?
+    url == blank_url
   end
 end

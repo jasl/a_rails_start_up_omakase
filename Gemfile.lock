@@ -8,14 +8,6 @@ GIT
       rest-client (>= 1.6.7)
 
 GIT
-  remote: https://github.com/jasl/ueditor_rails.git
-  revision: 59552c57ea32f940273794e97664beb53ad4d390
-  specs:
-    ueditor_rails (0.0.1)
-      jquery-rails
-      rails (~> 3.2.1)
-
-GIT
   remote: https://github.com/jonnyzheng/weibo_2.git
   revision: 9f4b0bc8cd2f94c48d515d7e0a393e925ca5bd0c
   specs:
@@ -55,17 +47,10 @@ GEM
     activesupport (3.2.13)
       i18n (= 0.6.1)
       multi_json (~> 1.0)
-    acts-as-messageable (0.4.8)
-      activerecord (>= 3.0.0)
-      activesupport (>= 3.0.0)
-      ancestry (~> 1.3.0)
-      railties (>= 3.0.0)
     acts-as-taggable-on (2.3.3)
       rails (~> 3.0)
     acts_as_commentable (4.0.0)
     addressable (2.3.3)
-    ancestry (1.3.0)
-      activerecord (>= 2.3.14)
     annotate (2.5.0)
       rake
     arel (3.0.2)
@@ -126,7 +111,7 @@ GEM
     database_cleaner (0.9.1)
     delayed_job (3.0.5)
       activesupport (~> 3.0)
-    delayed_job_active_record (0.4.3)
+    delayed_job_active_record (0.4.4)
       activerecord (>= 2.1.0, < 4)
       delayed_job (~> 3.0)
     devise (2.2.3)
@@ -348,6 +333,9 @@ GEM
       railties (> 3.2.8, < 4.0.0)
       sprockets (>= 2.0.0)
     tzinfo (0.3.37)
+    ueditor_rails (0.0.2)
+      jquery-rails
+      rails (~> 3.2.1)
     uglifier (1.3.0)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
@@ -368,7 +356,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  acts-as-messageable
   acts-as-taggable-on
   acts_as_commentable
   annotate
@@ -427,7 +414,7 @@ DEPENDENCIES
   therubyracer
   thin
   turbo-sprockets-rails3
-  ueditor_rails!
+  ueditor_rails
   uglifier (>= 1.0.3)
   unicorn
   weibo_2!

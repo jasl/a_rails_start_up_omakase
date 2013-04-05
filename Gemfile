@@ -20,13 +20,13 @@ gem 'renren', :git => 'https://github.com/jasl/renren.git' # renren api
 gem 'cancan' # access control
 
 # Acts as something
-gem 'acts-as-messageable'
+# gem 'acts-as-messageable'
 gem 'acts-as-taggable-on'
 gem 'acts_as_commentable'
 
 # Attachments
 gem 'carrierwave'
-# gem 'mini_magick' # when using upyun, this is no need
+# gem 'mini_magick' # when using upyun, there is no need
 gem 'carrierwave-upyun'
 gem 'rest-client' # for up yun
 
@@ -48,7 +48,7 @@ gem 'dj_mailer' # send mail using classic api
 gem 'daemon-spawn'
 
 # WYSIWYG editor
-gem 'ueditor_rails', :git => 'https://github.com/jasl/ueditor_rails.git'
+gem 'ueditor_rails' #, :git => 'https://github.com/jasl/ueditor_rails.git'
 
 # Misc
 gem 'settingslogic'

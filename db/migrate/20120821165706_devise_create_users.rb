@@ -33,10 +33,6 @@ class DeviseCreateUsers < ActiveRecord::Migration
       ## Token authenticatable
       # t.string :authentication_token
 
-      t.string :province, :limit => 6
-      t.string :city, :limit => 6
-      t.string :district, :limit => 6
-
       t.string :role, :null => false, :limit => 11, :default => 'member'
       t.string :state, :null => false, :limit => 11, :default => 'active'
 

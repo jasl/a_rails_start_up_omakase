@@ -1,7 +1,5 @@
 StartUp::Application.routes.draw do
 
-  mount RailsAdmin::Engine => '/rails_admin', :as => 'rails_admin'
-
   resources :posts do
     resources :comments
   end
@@ -9,6 +7,7 @@ StartUp::Application.routes.draw do
   namespace :admin do
     root :to => 'home#index'
   end
+  mount RailsAdmin::Engine => '/rails_admin', :as => 'rails_admin'
 
   match 'district/:id' => 'district#show'
 

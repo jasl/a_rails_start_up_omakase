@@ -7,6 +7,8 @@ A Rails start up Omakase
 
 ##一些代码
 - lib/oauth_handlers 或许可以抽取成gem，利用facade pattern把人人、微博的相同作用的api包装成统一接口，app/models/authorization.rb 利用delegate直接调用
+- app/models/concerns/o_auth_authorizable.rb 暴露接口可以在授权后把sns的个人信息添加到账号中，app/models/user.rb包含了头像的例子
+- app/controllers/users/omniauth_callbacks_controller.rb 可以指定oath的info字段，防止session中存过大的对象而产生错误
 - config/environments/production.rb 自定义了一套assets预编译规则，对重型js lib（例如auditor）友善
 - config/environments/production.rb 设置assets_host，直接让upyun接管所有assets
 - config/deploy.rb 自定义的任务部署账号需要提权可以试用try_su方法

@@ -5,9 +5,6 @@ defaults: &defaults
   description: "Start Up site"
   admin_mail: ""
   version: "0.1"
-  upload:
-    attachment: ["doc", "docx", "pdf"]
-    picture: ["jpg", "tif", "png", "gif"]
   mailer:
     sender: ""
   tokens:

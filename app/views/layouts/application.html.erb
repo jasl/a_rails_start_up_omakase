@@ -5,13 +5,13 @@
 <%= yield %>
 
 <% content_for :javascripts do %>
-  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag 'application' %>
   <%= yield :js %>
   <%#= Garelic.monitoring Setting.tokens.google_analytics %>
 <% end %>
 
 <% content_for :stylesheets do %>
-  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= stylesheet_link_tag 'application', :media => 'all' %>
   <%= yield :css %>
 <% end %>
 

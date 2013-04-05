@@ -57,8 +57,8 @@ ActiveRecord::Schema.define(:version => 20130111180241) do
     t.datetime "updated_at",                                              :null => false
   end
 
-  add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
-  add_index "comments", ["commentable_type"], :name => "index_comments_on_commentable_type"
+  add_index "comments", ["commentable_type", "commentable_id"], :name => "commentable"
+  add_index "comments", ["state"], :name => "index_comments_on_state"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
   create_table "delayed_jobs", :force => true do |t|
@@ -80,11 +80,13 @@ ActiveRecord::Schema.define(:version => 20130111180241) do
   create_table "posts", :force => true do |t|
     t.string   "title"
     t.text     "body"
-    t.integer  "user_id",    :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "user_id",                                           :null => false
+    t.string   "state",      :limit => 11, :default => "published", :null => false
+    t.datetime "created_at",                                        :null => false
+    t.datetime "updated_at",                                        :null => false
   end
 
+  add_index "posts", ["state"], :name => "index_posts_on_state"
   add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
 
   create_table "rails_admin_histories", :force => true do |t|
@@ -128,19 +130,17 @@ ActiveRecord::Schema.define(:version => 20130111180241) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.string   "province",               :limit => 6
-    t.string   "city",                   :limit => 6
-    t.string   "district",               :limit => 6
     t.string   "role",                   :limit => 11, :default => "member", :null => false
     t.string   "state",                  :limit => 11, :default => "active", :null => false
     t.datetime "created_at",                                                 :null => false
     t.datetime "updated_at",                                                 :null => false
     t.string   "nickname"
-    t.string   "name"
-    t.string   "phone"
-    t.integer  "age"
-    t.integer  "location_id"
     t.boolean  "gender"
+    t.string   "description"
+    t.string   "avatar"
+    t.string   "province",               :limit => 6
+    t.string   "city",                   :limit => 6
+    t.string   "district",               :limit => 6
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

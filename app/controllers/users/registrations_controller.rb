@@ -8,12 +8,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def bind
     data = session[:omniauth]
     case params[:type]
-      when "bind" then
+      when 'bind' then
         self.resource = warden.authenticate!(auth_options)
       else
         build_resource params[:user]
     end
+
     self.resource.build_authorization data
+    self.resource.set_profiles_by_oauth data[:info]
 
     if self.resource.save
       session.delete :omniauth
@@ -35,7 +37,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def binding
-    resource = build_resource(params[:user] || info_from_omniauth)
+    resource = build_resource(params[:user])
     respond_with resource
   end
 
@@ -43,16 +45,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def require_oauth_and_not_bound
     # omniauth session lost or authorization exists
-    if session[:omniauth].blank? or Authorization.where(provider: session[:omniauth][:provider],
-                                                        uid: session[:omniauth][:uid]).exists?
+    if session[:omniauth].blank? or Authorization.find_by_provider_and_uid(session[:omniauth][:provider],
+                                                                           session[:omniauth][:uid])
       set_flash_message :notice, t('devise.registrations.oauth_failure')
       redirect_to new_user_registration_path
     end
-  end
-
-  def info_from_omniauth
-    (session[:omniauth].blank? or session[:omniauth][:info].blank?) ?
-        {} : session[:omniauth][:info]
   end
 
   def auth_options

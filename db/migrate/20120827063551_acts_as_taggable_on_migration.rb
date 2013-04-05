@@ -1,5 +1,5 @@
 class ActsAsTaggableOnMigration < ActiveRecord::Migration
-  def self.up
+  def change
     create_table :tags do |t|
       t.string :name
     end
@@ -21,10 +21,5 @@ class ActsAsTaggableOnMigration < ActiveRecord::Migration
 
     add_index :taggings, :tag_id
     add_index :taggings, [:taggable_id, :taggable_type, :context]
-  end
-
-  def self.down
-    drop_table :taggings
-    drop_table :tags
   end
 end

@@ -1,17 +1,12 @@
 <div class="container-fluid">
   <div class="span8">
     <fieldset>
-      <legend>No.<%= @user.id%> user</legend>
-      <div class="control-group">
-        <label class="control-label">Email</label>
-        <div class="controls">
-          <%= @user.email %>
-        </div>
-      </div>
+      <legend>No.<%= @user.id %> user</legend>
       <div class="control-group">
         <label class="control-label">Nick name</label>
         <div class="controls">
           <%= @user.nickname %>
+          <%= image_tag @user.avatar, :size => '120x120' %>
         </div>
       </div>
       <div class="control-group">
@@ -24,6 +19,12 @@
         <label class="control-label">Gender</label>
         <div class="controls">
           <%= @user.gender ? 'Male' : 'Female' %>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">Description</label>
+        <div class="controls">
+          <%= @user.description %>
         </div>
       </div>
     </fieldset>

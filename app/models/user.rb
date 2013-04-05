@@ -14,11 +14,13 @@ class User < ActiveRecord::Base
   after_create :send_welcome
 
   # profile
-  attr_accessible :nickname, :name, :phone, :location_id, :gender, :province, :city, :district
-  attr_accessible :nickname, :name, :phone, :location_id, :gender, :province, :city, :district, :as => :admin
+  mount_uploader :avatar, AvatarUploader
+  attr_accessible :nickname, :gender, :description, :avatar, :avatar_cache, :province, :city, :district
+  attr_accessible :nickname, :gender, :description, :avatar, :avatar_cache, :province, :city, :district,
+                  :as => :admin
 
   def admin?
-    self.role == "admin"
+    self.role == 'admin'
   end
 
   default_scope { where :state == :active }
@@ -32,6 +34,21 @@ class User < ActiveRecord::Base
 
   def to_s
     @display_name ||= self.nickname.blank? ? self.email.split('@')[0] : self.nickname
+  end
+
+  def set_profiles_by_oauth(info)
+    self.nickname = info[:nickname] if self.nickname.blank?
+    self.description = info[:description] if self.description.blank?
+    if self.avatar.blank? and not info[:image].blank?
+      begin
+        tmp = Tempfile.new 'avatar', :encoding => 'ascii-8bit'
+        tmp.write open(info[:image]).read
+        self.avatar.store! tmp
+      rescue Exception => ex
+        logger.log info[:image]
+        logger.log ex
+      end
+    end
   end
 
   private

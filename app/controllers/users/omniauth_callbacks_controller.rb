@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  INFO = %w(nickname image description)
 
   def self.provides_callback_for(*providers)
     providers.each do |provider|
@@ -13,13 +14,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
                    expires_at: omniauth.credentials.expires_at,
                    refresh_token: omniauth.credentials.refresh_token,
                    info: {
-                     name: omniauth.info.name,
-                     nickname: omniauth.info.nickname,
-                     email: omniauth.info.email
+                     #{INFO.collect {|f| "#{f}: omniauth.info.#{f}"}.join(',')}
                    }
                   }
 
-          if authorization = Authorization.where(provider: data[:provider], uid: data[:uid].to_s).first
+          if authorization = Authorization.find_by_provider_and_uid(data[:provider], data[:uid])
             if data[:access_token] != authorization.access_token
               authorization.update_attributes! access_token: data[:access_token],
                                                expires_at: data[:expires_at]
@@ -36,7 +35,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
             session[:omniauth] = data
 
             set_flash_message(:notice, :success, :kind => data[:provider])
-            redirect_to users_binding_path(:type => :regist)
+            redirect_to users_binding_path(:type => :new)
           end
         end
       EVAL

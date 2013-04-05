@@ -3,16 +3,16 @@
     <div class="span8">
       <div class="tabbable"> <!-- Only required for left/right tabs -->
         <ul class="nav nav-tabs">
-          <li class="<%= "active" unless active_bind_tab? %>">
+          <li class="<%= 'active' unless active_bind_tab? %>">
             <a href="#tab1" data-toggle="tab">New user</a>
           </li>
-          <li class="<%= "active" if active_bind_tab? %>">
+          <li class="<%= 'active' if active_bind_tab? %>">
             <a href="#tab2" data-toggle="tab">Bind to an exists user</a>
           </li>
         </ul>
         <div class="tab-content">
-          <div class="tab-pane <%= "active" unless active_bind_tab? %>" id="tab1">
-            <%= form_for(resource, :as => resource_name, :url => users_binding_path, :html => {:class => 'form-horizontal'} ) do |f| %>
+          <div class="tab-pane <%= 'active' unless active_bind_tab? %>" id="tab1">
+            <%= form_for(resource, :as => resource_name, :url => users_binding_path(:type => :new), :html => {:class => 'form-horizontal'} ) do |f| %>
               <fieldset>
                 <div class="row row-grid">
                   <div class="span10 offset1">
@@ -23,12 +23,6 @@
                   <%= f.label :email, :class => 'control-label'  %>
                   <div class="controls">
                     <%= f.email_field :email, :class => 'input- large' %>
-                  </div>
-                </div>
-                <div class="control-group">
-                  <%= f.label :nickname, :class => 'control-label' %>
-                  <div class="controls">
-                    <%= f.text_field :nickname, :class => 'input-large' %>
                   </div>
                 </div>
                 <div class="control-group">
@@ -49,7 +43,7 @@
               </fieldset>
             <% end %>
           </div>
-          <div class="tab-pane <%= "active" if active_bind_tab? %>" id="tab2">
+          <div class="tab-pane <%= 'active' if active_bind_tab? %>" id="tab2">
             <%= form_for(resource, :as => resource_name, :url => users_binding_path(:type => :bind), :html => {:class => 'form-horizontal'} ) do |f| %>
               <fieldset>
                 <div class="control-group">

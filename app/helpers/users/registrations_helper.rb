@@ -1,5 +1,5 @@
 module Users::RegistrationsHelper
-  def active_bind_tab?(method)
-    params[:type] == method
+  def active_bind_tab?
+    params[:type] == 'bind'
   end
 end

@@ -17,10 +17,18 @@
             </div>
           </div>
           <div class="control-group">
+            <%= f.label :avatar, :class => 'control-label' %>
+            <div class="controls">
+              <%= f.file_field :avatar %>
+              <%= f.hidden_field :avatar_cache %>
+              <%= image_tag current_user.avatar, :size => '120x120' %>
+            </div>
+          </div>
+          <div class="control-group">
             <%= f.label :district, :class => 'control-label' %>
             <div class="controls">
               <%= f.district_selects :class => 'input-large' %>
-              <% has_district_selects %>
+              <%- has_district_selects -%>
             </div>
           </div>
           <div class="control-group">
@@ -34,7 +42,12 @@
               </label>
             </div>
           </div>
-
+          <div class="control-group">
+            <%= f.label :description, :class => 'control-label' %>
+            <div class="controls">
+              <%= f.text_area :description, :class => 'input-large', :rows => 5 %>
+            </div>
+          </div>
           <div class="form-actions">
             <%= f.submit t('devise.views.registrations.edit.submit'), :class => 'btn btn-primary' %>
           </div>

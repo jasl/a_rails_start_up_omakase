@@ -1,5 +1,5 @@
 class CreateComments < ActiveRecord::Migration
-  def self.up
+  def change
     create_table :comments do |t|
       t.string :title, :limit => 50, :default => ""
       t.text :body, :null => false
@@ -10,12 +10,8 @@ class CreateComments < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :comments, :commentable_type
-    add_index :comments, :commentable_id
+    add_index :comments, [:commentable_type, :commentable_id], :name => 'commentable'
     add_index :comments, :user_id
-  end
-
-  def self.down
-    drop_table :comments
+    add_index :comments, :state
   end
 end
