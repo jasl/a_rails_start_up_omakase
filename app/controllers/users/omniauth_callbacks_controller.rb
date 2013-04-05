@@ -29,8 +29,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
             sign_in_and_redirect user
           elsif current_user
             current_user.create_authorization data
+            current_user.set_profiles_by_oauth data[:info]
+            current_user.save
 
-            after_sign_in_path_for(current_user)
+            redirect_to after_sign_in_path_for(current_user)
           else
             session[:omniauth] = data
 
