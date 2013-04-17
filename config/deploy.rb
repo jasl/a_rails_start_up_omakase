@@ -2,7 +2,6 @@
 require 'capistrano_colors'
 require 'sushi/ssh'
 require 'bundler/capistrano'
-require 'rvm/capistrano'
 load 'deploy/assets'
 # load 'config/recipes/su'
 
@@ -15,9 +14,6 @@ set :rails_env, env
 # Set remote server user
 set :user, settings['deployment']['deploy_user']
 set :use_sudo, false
-
-# Fix RVM
-$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 
 default_run_options[:pty] = true
 
@@ -33,7 +29,9 @@ set :copy_exclude, %w".git spec"
 # RVM
 set :rvm_ruby_string, settings['deployment']['rvm_ruby']
 set :rvm_type, :system
-# before 'deploy:setup', 'rvm:install_rvm'
+require 'rvm/capistrano'
+# before 'deploy', 'rvm:install_rvm'
+# before 'deploy', 'rvm:install_ruby'
 
 # Unicorn
 require 'capistrano-unicorn'

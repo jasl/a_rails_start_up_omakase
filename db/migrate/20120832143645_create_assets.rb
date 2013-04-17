@@ -2,7 +2,7 @@ class CreateAssets < ActiveRecord::Migration
   def change
     create_table :assets do |t|
       t.string :access_token, :null => false
-      # t.string :original_name
+      t.string :original_name
       t.string :store_name, :null => false
       t.string :store_path
       t.integer :file_size

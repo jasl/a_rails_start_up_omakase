@@ -98,7 +98,7 @@ module ApplicationHelper
   end
 
   def has_ueditor
-    unless defined? @has_kindeditor
+    unless defined? @has_ueditor
       has_specified_javascript 'ueditor_config'
       @has_ueditor = true
     end

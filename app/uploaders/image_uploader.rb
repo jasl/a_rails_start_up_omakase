@@ -30,15 +30,15 @@ class ImageUploader < BaseUploader
   # Glory for huacnlee
   # 覆盖 url 方法以适应“图片空间”的缩略图命名
   def url(version_name = "")
-    @url ||= super({})
-    return blank_url if @url.blank?
+    url ||= super({})
+    return blank_url if url.blank?
     version_name = version_name.to_s
-    return @url if version_name.blank?
+    return url if version_name.blank?
     unless version_name.in?(remote_versions)
       # 故意在调用了一个没有定义的“缩略图版本名称”的时候抛出异常，以便开发的时候能及时看到调错了
       raise "ImageUploader version_name:#{version_name} not allow."
     end
-    [@url,version_name].join(Setting.upyun.separator)
+    [url,version_name].join(Setting.upyun.separator)
   end
 
   def extension_white_list
