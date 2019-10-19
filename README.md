@@ -5,7 +5,7 @@ A Rails start up Omakase
 这个repo另一个目的是记录我对rails app架构的想法。
 或许对于Startup的快速迭代来说，MongoDB才是正确的选择。
 
-##一些代码
+## 一些代码
 - lib/oauth_handlers 或许可以抽取成gem，利用facade pattern把人人、微博的相同作用的api包装成统一接口，app/models/authorization.rb 利用delegate直接调用
 - app/models/concerns/o_auth_authorizable.rb 暴露接口可以在授权后把sns的个人信息添加到账号中，app/models/user.rb包含了头像的例子
 - app/controllers/users/omniauth_callbacks_controller.rb 可以指定oath的info字段，防止session中存过大的对象而产生错误
@@ -21,7 +21,7 @@ A Rails start up Omakase
 - monit调试比较坑爹，试试用script/debug_monit包装一下命令，你可能需要把它放到一个任何用户都访问到的地方比如/usr/bin
 - config/deploy.rb, /config/deploy/* 支持多环境部署，例如```STAGE=staging cap deploy```部署到staging环境
 
-##组件
+## 组件
 - 完整的部署流程（release code to server+bundle+migrate database+assets precompile+sync assets to upyun+hot deployment）
 - 基本的运维配置，monit监控进程（邮件报警）、logrotate分割日志、whenever+backup自动备份
 - 用户子系统
@@ -32,7 +32,7 @@ A Rails start up Omakase
 - UEditor集成(我自己的gem)+图片、附件上传的服务器端（基本）
 - 多环境部署
 
-##方案
+## 方案
 - Ruby管理：RVM
 - Ruby: Ruby 1.9.3
 - 框架：Rails 3.2
@@ -52,7 +52,7 @@ A Rails start up Omakase
 - Web容器：Unicorn
 - 日志分析：request-log-analyzer
 
-##Gems
+## Gems
 - 用户系统：devise + omniauth
 - OAuth api：weibo_2 renren
 - 访问控制：cancan
@@ -63,14 +63,14 @@ A Rails start up Omakase
 - 全局配置：settingslogic
 - 前端：compass-rails + jquery-ui-rails + bootstrap-sass
 
-##运行开发环境
+## 运行开发环境
 - git clone
 - bundle
 - rake db:migrate
 - foreman start
 - 访问localhost:3000
 
-##部署
+## 部署
 - 需要 git、rvm、rvm requirements中的给出的组件
 - 生成配置文件(```rails g conf:[monit|unicorn|log_rotate|delayed_job|nginx]```)、复制到对应软件的配置路径
 - 建立专用部署用户（如deploy）给予执行service的sudo权限（见config/deploy.rb注释）
@@ -82,13 +82,13 @@ A Rails start up Omakase
 - cap db:seed 导入初始数据（编辑db/seeds.rb来满足需求）
 - 没有问题，访问你的域名，否则请检查log/unicorn.stderr.log和log/production.log排除
 
-##注意事项
+## 注意事项
 - assets precompile：左右app/assets和vendor/assets下的文件名非‘_’开头文件都会被预编译，避免手动添加。不希望被预编译的第三方lib，考虑放到lib/assets对应目录下。
 - set_title set_description set_keywords 这三个helper可以调用多次 会产生如 ‘Home - Admin - Start Up'的层级效果
 - auditor太重了，放在application.js里很影响加载速度，所以你需要在需要在需要他的页面里<%= has_ueditor %>，这段代码重复调用不会多次引用文件
 - 富文本输出<%= safe @post.body %>
 
-##帮助我
+## 帮助我
 希望我的工作能够为你提供一些思路或者节省工作，如果你发现有不足的地方希望你能够fork&pull request，或者给我发送邮件<jasl9187@hotmail.com>，感谢！
 
 jasl, [MIT](http://jasl.mit-license.org/) license.
